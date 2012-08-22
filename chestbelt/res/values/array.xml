@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+   	<string-array name="pref_connection_mode_entries">
+        <item>Secure standard API</item>
+        <item>Secure native method</item>
+        <item>Insecure standard API</item>
+        <item>Insecure native method</item>
+    </string-array>
+    
+	<string-array name="pref_connection_mode_values">
+        <item>10</item>
+        <item>30</item>
+        <item>20</item>
+        <item>40</item>
+    </string-array>
+    
+	<string-array name="pref_datamode_entries">
+        <item>Extracted</item>
+        <item>Full ECG</item>
+        <item>Raw</item>
+        <item>Raw accelerometer</item>
+        <item>Raw giro mode</item>
+        <item>Test</item>
+    </string-array>
+    
+	<string-array name="pref_datamode_values">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+    </string-array>
+    
+</resources>

@@ -1,0 +1,17 @@
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory
+            android:title="Data mode">
+
+        <ListPreference
+                android:key="datamode_list_preference"
+                android:title="Data mode"
+                android:summary="Select the data mode"
+                android:entries="@array/pref_datamode_entries"
+                android:entryValues="@array/pref_datamode_values"
+                android:dialogTitle="Select a data mode" 
+                android:defaultValue="10"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

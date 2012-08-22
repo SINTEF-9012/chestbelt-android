@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="graph_base">
+        <attr name="color" format="integer" />
+        <attr name="minimum" format="integer" />
+        <attr name="maximum" format="integer" />
+        <attr name="refresh" format="integer" />
+        <attr name="style" format="integer" />
+    </declare-styleable>
+    
+    <declare-styleable name="graph_details">
+        <attr name="name" format="string" />
+        <attr name="lines" format="integer" />
+    </declare-styleable>
+    
+</resources>

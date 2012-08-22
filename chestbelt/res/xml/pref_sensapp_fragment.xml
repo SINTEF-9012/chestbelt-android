@@ -1,0 +1,41 @@
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="Service status">
+
+        <CheckBoxPreference
+                android:key="@string/pref_data_storage"
+                android:title="Active" 
+                android:defaultValue="false"/>
+        
+         </PreferenceCategory>
+
+        <PreferenceCategory
+            android:title="SensApp server">
+        
+        <EditTextPreference
+                android:key="@string/pref_sensor_server"
+                android:title="Server address"
+                android:summary="Set the server address"
+                android:dialogTitle="Enter the server address" />
+        
+        <EditTextPreference
+                android:key="@string/pref_sensor_port"
+                android:title="Server port"
+                android:dialogTitle="Enter the server port"
+                android:defaultValue="80" />
+        
+        </PreferenceCategory>
+        
+        <PreferenceCategory
+            android:title="Storage options">
+        
+        <CheckBoxPreference
+                android:key="@string/pref_ecg_storage"
+                android:title="Store ECG" 
+                android:defaultValue="false"/>
+         
+    </PreferenceCategory>
+
+</PreferenceScreen>

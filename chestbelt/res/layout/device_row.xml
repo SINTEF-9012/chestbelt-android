@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<TextView 
+	    android:id="@+id/list_device_name"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+    	android:layout_centerVertical="true"
+    	android:paddingLeft="15dp"
+    	android:textSize="16sp" >
+	</TextView>
+
+	<TextView 
+	    android:id="@+id/list_device_address"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+    	android:layout_centerVertical="true"
+    	android:visibility="invisible"
+    	android:paddingLeft="15dp"
+    	android:textSize="16sp" >
+	</TextView>
+	
+	<ImageView 
+    	android:id="@+id/list_status_image"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentRight="true"
+    	android:paddingRight="15dp"
+    	android:paddingTop="10dp"
+    	android:paddingBottom="10dp"
+    	android:contentDescription="@string/list_status_image_description"/>
+	
+	<ImageView 
+    	android:id="@+id/list_available_image"
+    	android:layout_width="25dp"
+    	android:layout_height="25dp"
+    	android:layout_centerVertical="true"
+    	android:layout_toLeftOf="@id/list_status_image"
+    	android:paddingRight="15dp"
+    	android:contentDescription="@string/list_available_image_description"/>
+	
+</RelativeLayout>

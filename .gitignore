@@ -1,0 +1,7 @@
+.directory
+*~
+
+chestbelt/bin/*
+chestbelt/gen/*
+chestbelt/target
+chestbelt/.settings
