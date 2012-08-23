@@ -14,7 +14,7 @@
     	android:textSize="20sp" >
 	</TextView>
 	
-	<org.thingml.android.chestbelt.graph.GraphDetailsView 
+	<org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView 
        	android:id="@+id/gv_graphrow_graph"  
         android:layout_width="match_parent" 
         android:layout_height="150dp" />	       

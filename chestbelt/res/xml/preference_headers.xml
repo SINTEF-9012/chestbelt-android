@@ -2,17 +2,17 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
     
     <header 
-        android:fragment="org.thingml.android.chestbelt.preferences.ConnectionPrefFragment"
+        android:fragment="org.thingml.chestbelt.android.chestbeltdroid.preferences.ConnectionPrefFragment"
         android:title="Connection" >
     </header>
     
     <header 
-        android:fragment="org.thingml.android.chestbelt.preferences.ChestBeltPrefFragment"
+        android:fragment="org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment"
         android:title="ChestBelt" >
     </header>
 
     <header 
-        android:fragment="org.thingml.android.chestbelt.preferences.SensAppPrefFragment"
+        android:fragment="org.thingml.chestbelt.android.chestbeltdroid.preferences.SensAppPrefFragment"
         android:title="SensApp" >
     </header> 
 

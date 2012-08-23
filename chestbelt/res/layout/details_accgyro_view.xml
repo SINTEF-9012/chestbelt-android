@@ -14,17 +14,17 @@
         android:paddingTop="20dp"
         android:textSize="30sp"/>  
     
-    <org.thingml.android.chestbelt.graph.GraphDetailsView 
+    <org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView 
     	android:id="@+id/gv_sensor_graph1"  
     	android:layout_width="match_parent" 
     	android:layout_height="match_parent" 
     	android:layout_weight="1"/>
-    <org.thingml.android.chestbelt.graph.GraphDetailsView 
+    <org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView 
     	android:id="@+id/gv_sensor_graph2"  
     	android:layout_width="match_parent" 
     	android:layout_height="match_parent" 
     	android:layout_weight="1"/>
-    <org.thingml.android.chestbelt.graph.GraphDetailsView 
+    <org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView 
     	android:id="@+id/gv_sensor_graph3"  
     	android:layout_width="match_parent" 
     	android:layout_height="match_parent" 
