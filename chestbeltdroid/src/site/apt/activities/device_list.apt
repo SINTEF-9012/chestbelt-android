@@ -1,0 +1,31 @@
+	------
+	Device list activity
+	------
+ 	Fabien Fleurey
+        ------
+	2012-08-24
+
+Device list activity
+
+  This is the main activity. It enables to detect and manage connections with chest belt devices and monitoring their status.
+
+* Detect available devices
+
+    To detect which devices are available, press the "Detect available devices" at the bottom of the list. A green point appears at the right of each device available.
+
+* Connect a device
+
+    There is two ways to connect a device.
+    
+    * Short click on the device list:
+        If you click on a device which is not already connected, it will ask you if you want attempt to connect the device. Press yes to initialize connection. If the connection succeed the dashboard activity will be shown.
+    
+    * By the contextual menu:
+        On a device which is not already connected, perform a long click on the device to open the contextual menu. Then press on "Connect".
+
+* Disconnect a device
+
+    On a device which is not already connected, perform a long click on the device to open the contextual menu. Then press on "Disconnect".
+   
+
+
