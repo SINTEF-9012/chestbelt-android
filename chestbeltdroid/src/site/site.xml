@@ -18,7 +18,7 @@
   </bannerLeft>
   <bannerRight>
     <name>ChestBelt Logo</name>
-    
+    <src>https://raw.github.com/SINTEF-9012/chestbelt-android/master/chestbeltdroid/img/chestbelt.png</src>
     <href>http://chestbelt.thingml.org/</href>
   </bannerRight>
 
