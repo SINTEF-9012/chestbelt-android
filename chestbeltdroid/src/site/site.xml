@@ -32,6 +32,7 @@
     <menu name="User Documentation">
        <item name="Activities" href="/activities/activities.html" collapse="true">
 	 <item name="Device list" href="/activities/device_list.html"/>
+	 <item name="Dashboard" href="/activities/dashboard.html"/>
        </item>
     </menu>
     <menu ref="reports"/>

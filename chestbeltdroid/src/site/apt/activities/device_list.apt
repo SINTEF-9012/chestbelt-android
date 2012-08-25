@@ -9,6 +9,8 @@ Device list activity
 
   This is the main activity. It enables to detect and manage connections with chest belt devices and monitoring their status.
 
+[screenshots/screenshot_devlist.png] device list activity screenshot
+
 * Detect available devices
 
     To detect which devices are available, press the "Detect available devices" at the bottom of the list. A green point appears at the right of each device available.

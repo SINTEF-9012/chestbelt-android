@@ -7,7 +7,7 @@
   <artifactId>chestbeltdroid</artifactId>
   <version>2.0-SNAPSHOT</version>
   <packaging>apk</packaging>
-  <name>${artifactId}</name>
+  <name>ChestBelt</name>
 
   <developers>
     <developer>
@@ -18,7 +18,7 @@
   <distributionManagement> 
     <site> 
       <id>GitHub pages</id> 
-      <url>http://sintef-9012.github.com/sensapp-android</url> 
+      <url>https://sintef-9012.github.com/chestbelt-android</url> 
     </site> 
   </distributionManagement>
 
@@ -28,10 +28,10 @@
     <url>http://${github.host}/${repositoryOwner}/${repositoryName}</url>
   </scm>
 
-  <ciManagement>
-    <system>jenkins</system>
-    <url>http://bdx.fleurey.com/jenkins/job/ChestBelt</url>
-  </ciManagement>
+  <issueManagement>
+    <url>https://github.com/${repositoryOwner}/${repositoryName}/issues</url>
+    <system>GitHub Issues</system>
+  </issueManagement>  
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,7 +77,7 @@
     <checkstyle.skip>false</checkstyle.skip>
     <findbugs.skip>false</findbugs.skip>
     <cobertura.skip>false</cobertura.skip>
-    <javadocs.skip>true</javadocs.skip>
+    <javadocs.skip>false</javadocs.skip>
     <pmd.skip>false</pmd.skip>
     
   </properties>  
