@@ -18,7 +18,7 @@
   <distributionManagement> 
     <site> 
       <id>GitHub pages</id> 
-      <url>https://sintef-9012.github.com/chestbelt-android</url> 
+      <url>https://${repositoryOwner}.github.com/${repositoryName}</url> 
     </site> 
   </distributionManagement>
 
@@ -37,7 +37,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     
-    <repositoryName>sensapp-android</repositoryName>
+    <repositoryName>chestbelt-android</repositoryName>
     <repositoryOwner>SINTEF-9012</repositoryOwner>
     <github.host>github.com</github.host>
 

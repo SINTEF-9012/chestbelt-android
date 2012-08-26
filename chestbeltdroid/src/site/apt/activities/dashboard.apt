@@ -16,7 +16,9 @@ Dashboard activity
     At the top left, the battery charge is displayed. The color depends of the value.
     
     * Green: upper than 50%.
+    
     * Yellow: between 50% and 15%.
+    
     * Red: lower than 15%
 
 * Belt mode
@@ -24,9 +26,13 @@ Dashboard activity
     At the top righ, the selected belt mode is displayed. The selected mode is the one choosen in the chest belt preference menu and can be one of the following:
     
     * Extracted
+    
     * Raw
+    
     * Raw gyroscope
+    
     * Raw accelerometer
+    
     * Test
 
 
