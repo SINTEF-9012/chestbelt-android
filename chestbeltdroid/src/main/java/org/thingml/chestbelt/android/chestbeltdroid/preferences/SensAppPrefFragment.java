@@ -20,8 +20,6 @@ import android.widget.Toast;
 
 public class SensAppPrefFragment extends PreferenceFragment {
 	
-	private Preference server;
-	private Preference port;
 	private Preference dataStorage;
 	private CheckBoxPreference storeECG;
 	private SharedPreferences prefs;
@@ -31,8 +29,6 @@ public class SensAppPrefFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.pref_sensapp_fragment);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		server = findPreference(getString(R.string.pref_sensor_server));
-		port = findPreference(getString(R.string.pref_sensor_port));
 		dataStorage = findPreference(getString(R.string.pref_data_storage));
 		storeECG = (CheckBoxPreference) findPreference(getString(R.string.pref_ecg_storage));
 		storeECG.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -63,21 +59,13 @@ public class SensAppPrefFragment extends PreferenceFragment {
 				return true;
 			}
 		});
-		server.setDependency(dataStorage.getKey());
-		port.setDependency(dataStorage.getKey());
 		storeECG.setDependency(dataStorage.getKey());
 	}
 
 	SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
 		@Override
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {	
-			if (key.equals(server.getKey())) {
-				String value = sharedPreferences.getString(getString(R.string.pref_sensor_server), "Set the server address");
-				server.setSummary(value);
-			} else if (key.equals(port.getKey())) {
-				String value = sharedPreferences.getString(getString(R.string.pref_sensor_port), "Set the server port");
-				port.setSummary(value);
-			} else if (key.equals(dataStorage.getKey())) {
+			if (key.equals(dataStorage.getKey())) {
 				if (prefs.getBoolean(key, false)) {
 					try{
 						getActivity().getPackageManager().getApplicationInfo("org.sensapp.android.sensappdroid", 0);
@@ -89,9 +77,9 @@ public class SensAppPrefFragment extends PreferenceFragment {
 							public void onClick(DialogInterface dialog, int id) {
 								Uri uri = Uri.parse("market://details?id=" + "org.sensapp.android.sensappdroid");
 								try {
-								  startActivity(new Intent(Intent.ACTION_VIEW, uri));
+									startActivity(new Intent(Intent.ACTION_VIEW, uri));
 								} catch (ActivityNotFoundException e1) {
-								  Toast.makeText(getActivity(), "Couldn't launch the market.", Toast.LENGTH_LONG).show();
+									Toast.makeText(getActivity(), "Couldn't launch the market.", Toast.LENGTH_LONG).show();
 								}
 							}
 						});
@@ -112,10 +100,6 @@ public class SensAppPrefFragment extends PreferenceFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		String value = prefs.getString(getString(R.string.pref_sensor_server), "Set the server address");
-		server.setSummary(value);
-		value = prefs.getString(getString(R.string.pref_sensor_port), "Set the server port");
-		port.setSummary(value);
 		prefs.registerOnSharedPreferenceChangeListener(spChanged);
 	}
 	

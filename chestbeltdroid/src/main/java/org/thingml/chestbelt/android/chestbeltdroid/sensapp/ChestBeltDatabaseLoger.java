@@ -6,7 +6,6 @@ import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltListe
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -118,13 +117,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 		}
 	}
 	
-	private String getSensAppAddress() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		return prefs.getString(context.getString(R.string.pref_sensor_server), "") + ":" + prefs.getString(context.getString(R.string.pref_sensor_port), "");
-	}
-	
 	private boolean registerSensor(String name, String unit, String template, String description) {
-		String uri = getSensAppAddress();
 		Cursor cursor = context.getContentResolver().query(Uri.parse(SensAppCPContract.Sensor.CONTENT_URI + "/" + name), new String[]{SensAppCPContract.Sensor.NAME}, null, null, null);
 		if (cursor != null) {
 			boolean exists = cursor.getCount() > 0;
@@ -132,14 +125,13 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 			if (!exists) {
 				ContentValues values = new ContentValues();
 				values.put(SensAppCPContract.Sensor.NAME, name);
-				values.put(SensAppCPContract.Sensor.URI, uri);
 				values.put(SensAppCPContract.Sensor.DESCRIPTION, description);
 				values.put(SensAppCPContract.Sensor.BACKEND, "raw");
 				values.put(SensAppCPContract.Sensor.TEMPLATE, template);
 				values.put(SensAppCPContract.Sensor.UNIT, unit);
 				values.put(SensAppCPContract.Sensor.UPLOADED, 0);
 				context.getContentResolver().insert(SensAppCPContract.Sensor.CONTENT_URI, values);
-				Log.i(TAG, "Sensor registered - name: " + name + " uri: " + uri);
+				Log.i(TAG, "Sensor registered - name: " + name);
 				return true;
 			} else {
 				Log.w(TAG, "Name already exits: " + name);
