@@ -9,8 +9,6 @@
 	<string name="pref_data_storage">storage_status</string>
 	<string name="pref_ecg_storage">storage_ecg_status</string>
 	<string name="pref_sensor_prefix">pref_sensor_prefix</string>
-	<string name="pref_sensor_server">pref_sensor_server</string>
-	<string name="pref_sensor_port">pref_sensor_port</string>
 	<string name="pref_apply_changes">pref_apply_changes_button</string>
 	<string name="pref_datamode_key">datamode_list_preference</string>
 	<string name="list_status_image_description">list_status_image_description</string>

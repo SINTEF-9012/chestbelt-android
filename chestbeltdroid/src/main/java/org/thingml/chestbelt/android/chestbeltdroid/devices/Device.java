@@ -15,7 +15,7 @@ public class Device {
 	private String name = null;
 	private String address = null;
 	private boolean connected = false;
-	private boolean available = true;
+	private boolean available = false;
 	
 	public static Device getFromAddress(ArrayList<Device> devices, String address) {
 		for (Device d : devices) {

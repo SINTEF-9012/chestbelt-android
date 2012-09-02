@@ -3,7 +3,6 @@ package org.thingml.chestbelt.android.chestbeltdroid.communication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
@@ -12,7 +11,6 @@ import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity;
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment;
 import org.thingml.chestbelt.android.chestbeltdroid.sensapp.ChestBeltDatabaseLoger;
-import org.thingml.chestbelt.android.chestbeltdroid.sensapp.UpdateUriTask;
 import org.thingml.chestbelt.driver.ChestBelt;
 import org.thingml.chestbelt.driver.ChestBeltMode;
 
@@ -23,10 +21,8 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Bundle;
@@ -38,22 +34,18 @@ import android.widget.Toast;
 
 public class BluetoothManagementService extends Service implements ConnectionTaskReceiver {
 	
-	public static final String ACTION_DEVICE_DETECTED = BluetoothManagementService.class.getName() + ".ACTION_DEVICE_DETECTED";
-	public static final String ACTION_DISCOVERY_STARTED = BluetoothManagementService.class.getName() + ".ACTION_DISCOVERY_STARTED";
-	public static final String ACTION_DISCOVERY_ENDED = BluetoothManagementService.class.getName() + ".ACTION_DISCOVERY_ENDED";
 	public static final String ACTION_CONNECTION_FAILURE = BluetoothManagementService.class.getName() + ".ACTION_CONNECTION_FAILURE";
 	public static final String ACTION_CONNECTION_SUCCESS = BluetoothManagementService.class.getName() + ".ACTION_CONNECTION_SUCCESS";
 	public static final String ACTION_DEVICE_DISCONNECTED = BluetoothManagementService.class.getName() + ".ACTION_DEVICE_DISCONNECTED";
-
-	public static final String EXTRA_DEVICE_IS_CONNECTED = BluetoothManagementService.class.getName() + ".EXTRA_DEVICE_IS_CONNECTED";		
-	public static final String EXTRA_DEVICE_IS_AVAILABLE = BluetoothManagementService.class.getName() + ".EXTRA_DEVICE_IS_AVAILABLE";		
+	public static final String ACTION_CONNECTED_DEVICES = BluetoothManagementService.class.getName() + ".ACTION_CONNECTED_DEVICES";
+			
+	public static final String EXTRA_CONNECTED_DEVICE_ADDRESSES = BluetoothManagementService.class.getName() + ".EXTRA_CONNECTED_DEVICE_ADDRESSES";
 	
 	private BluetoothAdapter btAdapter;
 	private Hashtable<String, ChestBelt> runningSessions = new Hashtable<String, ChestBelt>();
 	private Hashtable<String, ConnectionTask> connectTasks = new Hashtable<String, ConnectionTask>();
 	private Hashtable<String, ChestBeltDatabaseLoger> databaseLogers = new Hashtable<String, ChestBeltDatabaseLoger>();
 	private Hashtable<String, ChestBeltGraphBufferizer> graphBufferizers = new Hashtable<String, ChestBeltGraphBufferizer>();
-	private ArrayList<String> prefixFilter = new ArrayList<String>();
 	private SharedPreferences prefs;
 	private NotificationManager notificationManager;
 	private Notification connectionNotification;
@@ -71,24 +63,12 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(spChanged);
 		setupNotification();
-		registerReceivers();
-		prefixFilter.add("ESUMS");
-		prefixFilter.add("CORBYS");
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		String action = intent.getAction();
-		if (action.equals(DevicesListActivity.ACTION_ASK_START_DISCOVERY)) {
-			Log.d(TAG, "Start service: ACTION_ASK_START_DISCOVERY");
-			startDiscovery();
-		} else if (action.equals(DevicesListActivity.ACTION_ASK_END_DISCOVERY)) {
-			Log.d(TAG, "Start service: ACTION_ASK_END_DISCOVERY");
-			stopDiscovery();
-		} else if (action.equals(DevicesListActivity.ACTION_ASK_BOUNDED_DEVICES)) {
-			Log.d(TAG, "Start service: ACTION_ASK_BOUNDED_DEVICES");
-			sendBondedDevices();
-		} else if (action.equals(DevicesListActivity.ACTION_ASK_CONNECT)) {
+		if (action.equals(DevicesListActivity.ACTION_ASK_CONNECT)) {
 			Log.d(TAG, "Start service: ACTION_ASK_CONNECT");
 			Bundle extra = intent.getExtras(); 
 			newConnection(extra.getString(Device.EXTRA_DEVICE_NAME), extra.getString(Device.EXTRA_DEVICE_ADDRESS), extra.getInt(DevicesListActivity.EXTRA_CONNECTION_MODE));
@@ -96,6 +76,11 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			Log.d(TAG, "Start service: ACTION_ASK_DISCONNECT");
 			Bundle extra = intent.getExtras();
 			endConnection(extra.getString(Device.EXTRA_DEVICE_ADDRESS));
+		} else if (action.equals(DevicesListActivity.ACTION_ASK_CONNECTED_DEVICES)) {
+			Log.d(TAG, "Start service: ACTION_ASK_CONNECTED_DEVICES");
+			Intent i = new Intent(ACTION_CONNECTED_DEVICES);
+			i.putExtra(EXTRA_CONNECTED_DEVICE_ADDRESSES, runningSessions.keySet().toArray(new String[runningSessions.size()]));
+			sendBroadcast(i);
 		} else if (action.equals(DevicesListActivity.ACTION_OPENED)) {
 			Log.d(TAG, "Start service: ACTION_OPENED");
 			isApplicationRunning = true;
@@ -113,7 +98,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 				}
 			}, 5000);
 		} 
-		return START_STICKY_COMPATIBILITY;
+		return START_NOT_STICKY;
 	}
 	
 	public class ChestBeltBinder extends Binder {
@@ -130,39 +115,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		return chestBeltBinder;
 	}
 	
-	private void startDiscovery() {
-		Log.d(TAG, "Starting dicovery...");
-		if (btAdapter.isDiscovering()) {
-			btAdapter.cancelDiscovery();
-		}
-		btAdapter.startDiscovery();
-		sendBroadcast(new Intent(BluetoothManagementService.ACTION_DISCOVERY_STARTED));
-	}
-	
-	private void stopDiscovery() {
-		Log.d(TAG, "Stopping dicovery...");
-		if (btAdapter.isDiscovering()) {
-			btAdapter.cancelDiscovery();
-		}
-	}
-	
-	private boolean applyFilter(String name) {
-		for (String prefix : prefixFilter) {
-			if (name.startsWith(prefix)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private void sendBondedDevices() {
-		for (BluetoothDevice device : btAdapter.getBondedDevices()) {
-			if (applyFilter(device.getName())) {
-				newDevice(device, false);
-			}
-		}
-	}
-	
 	private void newConnection(String name, String address, int mode) {
 		if (runningSessions.containsKey(address)) {
 			Log.w(TAG, "Reconnect to " + name + " (" + address + ")");
@@ -173,17 +125,15 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 
 	private void endConnection(String address) {
 		BluetoothDevice d = btAdapter.getRemoteDevice(address);
-		String name = d.getName();
-		closeExchange(address);
+		runningSessions.get(address).close();
 		connectTasks.remove(address);
 		runningSessions.remove(address);
 		if (runningSessions.isEmpty()) {
 			stopForeground(true);
 		}
 		databaseLogers.remove(address);
-		Toast.makeText(getApplicationContext(), "Disconnected from " + name, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "Disconnected from " + d.getName(), Toast.LENGTH_SHORT).show();
 		Intent i = new Intent(ACTION_DEVICE_DISCONNECTED);
-		i.putExtra(Device.EXTRA_DEVICE_NAME, name);
 		i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
 		sendBroadcast(i);
 	}
@@ -226,45 +176,14 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		connectTasks.put(btDeviceAddress, (ConnectionTask) new ConnectionTask(this, device).execute(mode));
 	}
 
-	private final BroadcastReceiver btReceiver = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			String action = intent.getAction();
-			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-				String name = device.getName() != null ? device.getName() : "Unknown"; 
-				Log.i(TAG, "Device detected - Name: " + name + " Adress: " + device.getAddress());
-				if (device.getBondState() == BluetoothDevice.BOND_BONDED && applyFilter(name)) {
-					newDevice(device, true);
-				}
-			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-				Log.i(TAG, "...Discovery finished");
-				sendBroadcast(new Intent(BluetoothManagementService.ACTION_DISCOVERY_ENDED));
-			}
-		}
-	};
-
-	private void newDevice(BluetoothDevice device, boolean available) {
-			Intent i = new Intent(ACTION_DEVICE_DETECTED);
-			i.putExtra(Device.EXTRA_DEVICE_NAME, device.getName());
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, device.getAddress());
-			i.putExtra(BluetoothManagementService.EXTRA_DEVICE_IS_AVAILABLE, available);
-			boolean isConnected = runningSessions.containsKey(device.getAddress()) ? true : false;
-			i.putExtra(BluetoothManagementService.EXTRA_DEVICE_IS_CONNECTED, isConnected);
-			sendBroadcast(i);
-	}
-
 	SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
 		@Override
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			String datamodeKey = getString(R.string.pref_datamode_key);
 			String storageKey = getString(R.string.pref_data_storage);
 			String ecgStorageKey = getString(R.string.pref_ecg_storage);
-			String serverKey = getString(R.string.pref_sensor_server);
-			String portKey = getString(R.string.pref_sensor_port);
 			if (key.equals(storageKey)) {
 				refreshStorage();
-			} else if (key.equals(serverKey) || key.equals(portKey)) {
-				refreshUri();
 			} else if (key.equals(datamodeKey)) {
 				refreshDataMode();
 			} else if (key.equals(ecgStorageKey)) {
@@ -272,11 +191,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			}
 		}
 	};
-
-	private void registerReceivers() {
-		registerReceiver(btReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
-		registerReceiver(btReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
-	}
 	
 	private void refreshStorage() {
 		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
@@ -287,13 +201,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	private void refreshECGStorage() {
 		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
 			loger.setECGStorage(prefs.getBoolean(getString(R.string.pref_ecg_storage), false));
-		}
-	}
-	
-	private void refreshUri() {
-		String newUri = prefs.getString(getString(R.string.pref_sensor_server), "Invalid").trim() + ":" + prefs.getString(getString(R.string.pref_sensor_port), "0").trim();
-		for (String prefix : prefixFilter) {
-			new UpdateUriTask(this, prefix).execute(newUri);
 		}
 	}
 	
@@ -334,7 +241,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			closeExchange(address);
 		}
 		notificationManager.cancel(CONNECTION_NOTIFICATION_ID);
-		unregisterReceiver(btReceiver);
 		prefs.unregisterOnSharedPreferenceChangeListener(spChanged);
 	}
 

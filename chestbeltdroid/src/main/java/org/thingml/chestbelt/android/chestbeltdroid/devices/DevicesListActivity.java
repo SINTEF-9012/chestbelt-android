@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,9 +42,7 @@ import android.widget.Toast;
 
 public class DevicesListActivity extends ListActivity {
 	
-	public static final String ACTION_ASK_START_DISCOVERY = DevicesListActivity.class.getName() + ".ACTION_ASK_START_DISCOVERY";
-	public static final String ACTION_ASK_END_DISCOVERY = DevicesListActivity.class.getName() + ".ACTION_ASK_END_DISCOVERY";
-	public static final String ACTION_ASK_BOUNDED_DEVICES = DevicesListActivity.class.getName() + ".ACTION_ASK_BOUNDED_DEVICES";
+	public static final String ACTION_ASK_CONNECTED_DEVICES = DevicesListActivity.class.getName() + ".ACTION_ASK_CONNECTED_DEVICES";
 	public static final String ACTION_ASK_CONNECT = DevicesListActivity.class.getName() + ".ACTION_ASK_CONNECT";
 	public static final String ACTION_ASK_DISCONNECT = DevicesListActivity.class.getName() + ".ACTION_ASK_DISCONNECT";
 	public static final String ACTION_OPENED = DevicesListActivity.class.getName() + ".ACTION_OPENED";
@@ -79,9 +78,7 @@ public class DevicesListActivity extends ListActivity {
 		} else if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
 			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
 		} else {
-			Intent i = new Intent(this, BluetoothManagementService.class);
-			i.setAction(ACTION_ASK_BOUNDED_DEVICES);
-			startService(i);
+			getBondedDevice();
 		}
 		registerReceivers();
 		registerForContextMenu(getListView());
@@ -106,9 +103,8 @@ public class DevicesListActivity extends ListActivity {
 				d.setAvailable(d.isConnected());
 			}
 			deviceAdapter.notifyDataSetChanged();
-			Intent i = new Intent(this, BluetoothManagementService.class);
-			i.setAction(ACTION_ASK_START_DISCOVERY);
-			startService(i);
+			startDiscovery();
+			showDialog(DIALOG_DISCOVERY_ID);
 		} else {
 			final Device d = ((Device) l.getItemAtPosition(position));
 			if (d.isConnected()) {
@@ -153,9 +149,7 @@ public class DevicesListActivity extends ListActivity {
 			dialog.setOnCancelListener(new OnCancelListener() {
 				public void onCancel(DialogInterface id) {
 					Log.i(TAG, "User interrupt discovery");
-					Intent i = new Intent(getApplicationContext(), BluetoothManagementService.class);
-					i.setAction(ACTION_ASK_END_DISCOVERY);
-					startService(i);
+					stopDiscovery();
 				}
 			});
 			return dialog;
@@ -246,9 +240,7 @@ public class DevicesListActivity extends ListActivity {
 			case REQUEST_ENABLE_BT:
 				if (resultCode == RESULT_OK) { 
 					Log.i(TAG, "Bluetooth succesfuly activated.");
-					Intent i = new Intent(this, BluetoothManagementService.class);
-					i.setAction(ACTION_ASK_BOUNDED_DEVICES);
-					startService(i);
+					getBondedDevice();
 				} else if (resultCode == RESULT_CANCELED) { 
 					Log.e(TAG, "Faillure during bluetooth activation.");
 					Toast.makeText(getApplicationContext(), "Unable to start bluetooth", Toast.LENGTH_LONG).show();
@@ -265,22 +257,14 @@ public class DevicesListActivity extends ListActivity {
 		i.setAction(ACTION_CLOSED);
 		startService(i);
 		unregisterReceiver(btManagerReceiver);
+		unregisterReceiver(bluetoothReceiver);
 		super.onDestroy();
 	}
 	
 	private final BroadcastReceiver btManagerReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			if (BluetoothManagementService.ACTION_DISCOVERY_STARTED.equals(action)) {
-				Log.d(TAG, "Receiver: ACTION_DISCOVERY_STARTED");
-				showDialog(DIALOG_DISCOVERY_ID);
-			} else if (BluetoothManagementService.ACTION_DISCOVERY_ENDED.equals(action)) {
-				Log.d(TAG, "Receiver: ACTION_DISCOVERY_ENDED");
-				dismissDialog(DIALOG_DISCOVERY_ID);
-			} else if (BluetoothManagementService.ACTION_DEVICE_DETECTED.equals(action)) {
-				Log.d(TAG, "Receiver: ACTION_DEVICE_DETECTED");
-				deviceDetected(intent);
-			} else if (BluetoothManagementService.ACTION_CONNECTION_SUCCESS.equals(action)) {
+			if (BluetoothManagementService.ACTION_CONNECTION_SUCCESS.equals(action)) {
 				Log.d(TAG, "Receiver: ACTION_CONNECTION_SUCCESS");
 				dismissDialog(DIALOG_CONNECTION_ID);
 				String address = intent.getExtras().getString(Device.EXTRA_DEVICE_ADDRESS);
@@ -289,6 +273,16 @@ public class DevicesListActivity extends ListActivity {
 			} else if (action.equals(BluetoothManagementService.ACTION_CONNECTION_FAILURE)) {
 				Log.d(TAG, "Receiver: ACTION_CONNECTION_FAILURE");
 				dismissDialog(DIALOG_CONNECTION_ID);
+			} else if (action.equals(BluetoothManagementService.ACTION_CONNECTED_DEVICES)) {
+				Log.d(TAG, "Receiver: ACTION_CONNECTED_DEVICES");
+				String[] addresses = intent.getExtras().getStringArray(BluetoothManagementService.EXTRA_CONNECTED_DEVICE_ADDRESSES);
+				if (addresses != null) {
+					for (String address : addresses) {
+						Log.e(TAG, "Address: " + address);
+						setConnected(address);
+					}
+					deviceAdapter.notifyDataSetChanged();
+				}
 			} else if (BluetoothManagementService.ACTION_DEVICE_DISCONNECTED.equals(action)) {
 				Log.d(TAG, "Receiver: ACTION_DEVICE_DISCONNECTED");
 				String address = intent.getExtras().getString(Device.EXTRA_DEVICE_ADDRESS);
@@ -298,18 +292,80 @@ public class DevicesListActivity extends ListActivity {
 		}
 	};
 	
-	private void deviceDetected(Intent intent) {
-		String name = intent.getExtras().getString(Device.EXTRA_DEVICE_NAME);
-		String address = intent.getExtras().getString(Device.EXTRA_DEVICE_ADDRESS);
-		if (!Device.contain(devices, address)) { 
-			Device device = new Device(name, address);
-			Log.d(TAG, "New device added: " + name + " (" + address + ")");
-			devices.add(device);
-		} 
-		Device d = Device.getFromAddress(devices, address);
-		d.setConnected(intent.getExtras().getBoolean(BluetoothManagementService.EXTRA_DEVICE_IS_CONNECTED, false));
-		d.setAvailable(d.isConnected() || intent.getExtras().getBoolean(BluetoothManagementService.EXTRA_DEVICE_IS_AVAILABLE));
-		Log.i(TAG, "Device: " + d);
+	private void setConnected(String address) {
+		for (Device d : devices) {
+			if (d.getAddress().equals(address)) {
+				d.setConnected(true);
+				d.setAvailable(true);
+			}
+		}
+	}
+	
+	private void deviceDetected(BluetoothDevice device) {
+		Device d = Device.getFromAddress(devices, device.getAddress());
+		if (d != null) {
+			d.setConnected(d.isConnected());
+			d.setAvailable(true);
+			Log.i(TAG, "Device detected: " + d);
+			deviceAdapter.notifyDataSetChanged();
+		} else {
+			Log.e(TAG, "Null device");
+		}
+	}
+	
+	private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+				String name = device.getName() != null ? device.getName() : "Unknown"; 
+				Log.i(TAG, "Device detected - Name: " + name + " Adress: " + device.getAddress());
+				if (device.getBondState() == BluetoothDevice.BOND_BONDED && isChestBeltDevice(device)) {
+					deviceDetected(device);
+				}
+			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+				Log.i(TAG, "...Discovery finished");
+				dismissDialog(DIALOG_DISCOVERY_ID);
+			}
+		}
+	};
+	
+	private void startDiscovery() {
+		Log.d(TAG, "Starting dicovery...");
+		if (BluetoothAdapter.getDefaultAdapter().isDiscovering()) {
+			BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+		}
+		BluetoothAdapter.getDefaultAdapter().startDiscovery();
+	}
+	
+	private void stopDiscovery() {
+		Log.d(TAG, "Stopping dicovery...");
+		if (BluetoothAdapter.getDefaultAdapter().isDiscovering()) {
+			BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+		}
+	}
+	
+	private boolean isChestBeltDevice(BluetoothDevice device) {
+		if (device.getName() != null) {
+			if (device.getName().startsWith("CORBYS")) {
+				return true;
+			} else if (device.getName().matches("E...S.*")){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void getBondedDevice() {
+		for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
+			if (isChestBeltDevice(device)) {
+				Device d = new Device(device.getName(), device.getAddress());
+				devices.add(d);
+			}
+		}
+		Intent i = new Intent(this, BluetoothManagementService.class);
+		i.setAction(ACTION_ASK_CONNECTED_DEVICES);
+		startService(i);
 		deviceAdapter.notifyDataSetChanged();
 	}
 	
@@ -334,11 +390,11 @@ public class DevicesListActivity extends ListActivity {
 	}
 	
 	private void registerReceivers() {
-		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_DISCOVERY_STARTED));
-		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_DISCOVERY_ENDED));
-		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_DEVICE_DETECTED));
 		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_CONNECTION_SUCCESS));
 		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_CONNECTION_FAILURE));
 		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_DEVICE_DISCONNECTED));
+		registerReceiver(btManagerReceiver, new IntentFilter(BluetoothManagementService.ACTION_CONNECTED_DEVICES));
+		registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+		registerReceiver(bluetoothReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 	}
 }
