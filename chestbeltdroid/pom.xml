@@ -16,10 +16,17 @@
   </developers>
   
   <distributionManagement> 
-    <site> 
-      <id>GitHub pages</id> 
-      <url>https://${repositoryOwner}.github.com/${repositoryName}</url> 
-    </site> 
+      <repository>
+            <id>thingml-release</id>
+            <name>thingml-release</name>
+            <url>http://maven.thingml.org/archiva/repository/thingml-release/</url>
+        </repository>
+        
+        <snapshotRepository>
+            <id>thingml-snapshot</id>
+            <name>thingml-snapshot</name>
+            <url>http://maven.thingml.org/archiva/repository/thingml-snapshot/</url>
+        </snapshotRepository>
   </distributionManagement>
 
   <scm>
@@ -34,7 +41,6 @@
   </issueManagement>  
   
   <repositories>
-        
         <repository>
             <id>thingml-snapshot</id>
             <name>thingml-snapshot</name>
@@ -399,21 +405,5 @@
       </plugin>
     </plugins>
   </reporting>
-  
-   <distributionManagement>
-        
-        <repository>
-            <id>thingml-release</id>
-            <name>thingml-release</name>
-            <url>http://maven.thingml.org/archiva/repository/thingml-release/</url>
-        </repository>
-        
-        <snapshotRepository>
-            <id>thingml-snapshot</id>
-            <name>thingml-snapshot</name>
-            <url>http://maven.thingml.org/archiva/repository/thingml-snapshot/</url>
-        </snapshotRepository>
-        
-    </distributionManagement>
-  
+    
 </project>
