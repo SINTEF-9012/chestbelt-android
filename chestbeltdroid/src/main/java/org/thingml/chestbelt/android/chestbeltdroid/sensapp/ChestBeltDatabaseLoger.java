@@ -2,7 +2,7 @@ package org.thingml.chestbelt.android.chestbeltdroid.sensapp;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltListener;
+import org.thingml.chestbelt.driver.ChestBeltListener;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -148,12 +148,6 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 	}
 
 	@Override
-	public void cUFWRevision(long value, int timestamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void batteryStatus(int value, int timestamp) {
 		if (storage) {
 			savetoDatabase(prefix + SensorNames.BATTERY_STATUS, value, System.currentTimeMillis()/1000, 0);
@@ -179,18 +173,6 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void messageOverrun(int value, int timestamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void referenceClockTime(long value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void fullClockTimeSync(long value) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -350,5 +332,23 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 		if (storage) {
 			savetoDatabase(prefix + SensorNames.SKIN_TEMPERATURE, (float) value / 10, System.currentTimeMillis()/1000, 0);
 		}
+	}
+
+	@Override
+	public void cUFWRevision(String arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fullClockTimeSync(long arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void referenceClockTime(long arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }

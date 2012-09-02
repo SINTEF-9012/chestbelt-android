@@ -1,6 +1,7 @@
 package org.thingml.chestbelt.android.chestbeltdroid.communication;
 
 import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService.ChestBeltBinder;
+import org.thingml.chestbelt.driver.ChestBelt;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -15,7 +16,7 @@ public class ChestBeltServiceConnection implements ServiceConnection {
 	private ChestBeltServiceConnectionCallback activity;
 	private String address;
 	private ChestBeltGraphBufferizer bufferizer;
-	private ChestBeltDriver driver;
+	private ChestBelt driver;
 	private boolean bound = false;
 	
 	public ChestBeltServiceConnection(ChestBeltServiceConnectionCallback activity, String address) {
@@ -27,7 +28,7 @@ public class ChestBeltServiceConnection implements ServiceConnection {
 		return bufferizer;
 	}
 	
-	public ChestBeltDriver getDriver() {
+	public ChestBelt getDriver() {
 		return driver;
 	}
 	

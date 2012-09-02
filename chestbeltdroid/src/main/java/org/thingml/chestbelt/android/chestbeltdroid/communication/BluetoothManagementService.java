@@ -13,6 +13,8 @@ import org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity;
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment;
 import org.thingml.chestbelt.android.chestbeltdroid.sensapp.ChestBeltDatabaseLoger;
 import org.thingml.chestbelt.android.chestbeltdroid.sensapp.UpdateUriTask;
+import org.thingml.chestbelt.driver.ChestBelt;
+import org.thingml.chestbelt.driver.ChestBeltMode;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -47,7 +49,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	public static final String EXTRA_DEVICE_IS_AVAILABLE = BluetoothManagementService.class.getName() + ".EXTRA_DEVICE_IS_AVAILABLE";		
 	
 	private BluetoothAdapter btAdapter;
-	private Hashtable<String, ChestBeltDriver> runningSessions = new Hashtable<String, ChestBeltDriver>();
+	private Hashtable<String, ChestBelt> runningSessions = new Hashtable<String, ChestBelt>();
 	private Hashtable<String, ConnectionTask> connectTasks = new Hashtable<String, ConnectionTask>();
 	private Hashtable<String, ChestBeltDatabaseLoger> databaseLogers = new Hashtable<String, ChestBeltDatabaseLoger>();
 	private Hashtable<String, ChestBeltGraphBufferizer> graphBufferizers = new Hashtable<String, ChestBeltGraphBufferizer>();
@@ -115,7 +117,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	}
 	
 	public class ChestBeltBinder extends Binder {
-		public ChestBeltDriver getDriver(String address) {
+		public ChestBelt getDriver(String address) {
 			return runningSessions.get(address);
 		}
         public ChestBeltGraphBufferizer getGraphBufferizers(String address) {
@@ -186,7 +188,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		sendBroadcast(i);
 	}
 
-	private ChestBeltDriver initExchange(String address) {
+	private ChestBelt initExchange(String address) {
 		BluetoothSocket socket = connectTasks.get(address).getSocket();
 		InputStream in;
 		OutputStream out;
@@ -197,7 +199,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			e.printStackTrace();
 			return null;
 		}
-		return new ChestBeltDriver(in, out);
+		return new ChestBelt(in, out);
 	}
 
 	private void closeExchange(String address) {
@@ -319,7 +321,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	}
 	
 	private void setDataMode(ChestBeltMode mode) {
-		for (ChestBeltDriver session : runningSessions.values()) {
+		for (ChestBelt session : runningSessions.values()) {
 			session.setDataMode(mode);
 		}
 		Log.i(TAG, "Data mode set to: " + mode);
@@ -339,7 +341,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	@Override
 	public void onConnectionSuccess(String name, String address) {
 		Toast.makeText(getApplicationContext(), "Connected to " + name, Toast.LENGTH_SHORT).show();
-		ChestBeltDriver newSession = initExchange(address);
+		ChestBelt newSession = initExchange(address);
 		if (newSession != null) {
 			runningSessions.put(address, newSession);
 			ChestBeltDatabaseLoger databaseLoger = new ChestBeltDatabaseLoger(this, name);

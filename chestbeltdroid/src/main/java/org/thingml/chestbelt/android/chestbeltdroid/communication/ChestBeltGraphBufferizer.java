@@ -1,18 +1,17 @@
 package org.thingml.chestbelt.android.chestbeltdroid.communication;
 
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBuffer;
+import org.thingml.chestbelt.driver.ChestBeltListener;
 
 public class ChestBeltGraphBufferizer implements ChestBeltListener {
 
 	private GraphBuffer bufferHeartrate = new GraphBuffer();
-	//private GraphBuffer bufferHeartrateConfidence = new GraphBuffer();
 	
 	private GraphBuffer bufferTemperature = new GraphBuffer();
 	private GraphBuffer bufferBattery = new GraphBuffer();
 	private GraphBuffer bufferActivityLevel = new GraphBuffer();
 	
 	private GraphBuffer bufferECG = new GraphBuffer(400);
-	//private GraphBuffer bufferECGSignalQuality = new GraphBuffer();
 	
 	private GraphBuffer bufferGyroPitch = new GraphBuffer(250);
 	private GraphBuffer bufferGyroRoll = new GraphBuffer(250);
@@ -42,10 +41,6 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 		return bufferECG;
 	}
 
-//	public GraphBuffer getBufferECGSignalQuality() {
-//		return bufferECGSignalQuality;
-//	}
-
 	public GraphBuffer getBufferGyroPitch() {
 		return bufferGyroPitch;
 	}
@@ -57,10 +52,6 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 	public GraphBuffer getBufferGyroYaw() {
 		return bufferGyroYaw;
 	}
-
-//	public GraphBuffer getBufferHeartrateConfidence() {
-//		return bufferHeartrateConfidence;
-//	}
 
 	public GraphBuffer getBufferAccLateral() {
 		return bufferAccLateral;
@@ -76,12 +67,6 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 
 	@Override
 	public void cUSerialNumber(long value, int timestamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void cUFWRevision(long value, int timestamp) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -106,18 +91,6 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 
 	@Override
 	public void messageOverrun(int value, int timestamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void referenceClockTime(long value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void fullClockTimeSync(long value) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -195,6 +168,24 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 	@Override
 	public void skinTemperature(final int value, int timestamp) {
 		bufferTemperature.insertData(value/10);	
+	}
+
+	@Override
+	public void cUFWRevision(String arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fullClockTimeSync(long arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void referenceClockTime(long arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

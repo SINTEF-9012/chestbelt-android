@@ -2,7 +2,6 @@
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltListener;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.ChestBeltServiceConnectionCallback;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
@@ -11,6 +10,7 @@ import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper;
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment;
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity;
+import org.thingml.chestbelt.driver.ChestBeltListener;
 
 import android.app.Activity;
 import android.content.Context;
@@ -191,12 +191,6 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 	}
 
 	@Override
-	public void cUFWRevision(long value, int timestamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void batteryStatus(final int value, int timestamp) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -256,18 +250,6 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 
 	@Override
 	public void messageOverrun(int value, int timestamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void referenceClockTime(long value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void fullClockTimeSync(long value) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -403,5 +385,23 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 				temperature.setText((float) value / 10 + " °C");	
 			}
 		});
+	}
+
+	@Override
+	public void cUFWRevision(String arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fullClockTimeSync(long arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void referenceClockTime(long arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }
