@@ -273,13 +273,17 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
 			sendBroadcast(i);
 		} else {
-			onConnectionFailure(name, address);
+			onConnectionFailure(name, address, null);
 		}
 	}
 	
 	@Override
-	public void onConnectionFailure(String name, String address) {
-		Toast.makeText(getApplicationContext(), "Unable to connect to " + name, Toast.LENGTH_LONG).show();
+	public void onConnectionFailure(String name, String address, String errorMessage) {
+		if (errorMessage != null) {
+			Toast.makeText(getApplicationContext(), "Unable to connect to " + name + ":\n" + errorMessage, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(getApplicationContext(), "Unable to connect to " + name, Toast.LENGTH_LONG).show();
+		}
 		Intent i = new Intent(ACTION_CONNECTION_FAILURE);
 		i.putExtra(Device.EXTRA_DEVICE_NAME, name);
 		i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
