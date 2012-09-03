@@ -278,7 +278,6 @@ public class DevicesListActivity extends ListActivity {
 				String[] addresses = intent.getExtras().getStringArray(BluetoothManagementService.EXTRA_CONNECTED_DEVICE_ADDRESSES);
 				if (addresses != null) {
 					for (String address : addresses) {
-						Log.e(TAG, "Address: " + address);
 						setConnected(address);
 					}
 					deviceAdapter.notifyDataSetChanged();
