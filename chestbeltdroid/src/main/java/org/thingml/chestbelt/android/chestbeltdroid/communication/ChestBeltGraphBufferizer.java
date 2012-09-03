@@ -4,7 +4,14 @@ import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBuffer;
 import org.thingml.chestbelt.driver.ChestBeltListener;
 
 public class ChestBeltGraphBufferizer implements ChestBeltListener {
+	
+	public interface ChestBeltCallback {
+		public void connectionLost(String address);
+	}
 
+	private ChestBeltCallback listenner;
+	private String address;
+	
 	private GraphBuffer bufferHeartrate = new GraphBuffer();
 	
 	private GraphBuffer bufferTemperature = new GraphBuffer();
@@ -20,6 +27,11 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 	private GraphBuffer bufferAccLateral = new GraphBuffer(250);
 	private GraphBuffer bufferAccLongitudinal = new GraphBuffer(250);
 	private GraphBuffer bufferAccVertical = new GraphBuffer(250);
+	
+	public ChestBeltGraphBufferizer(ChestBeltCallback listenner, String address) {
+		this.listenner = listenner;
+		this.address = address;
+	}
 	
 	public GraphBuffer getBufferHeartrate() {
 		return bufferHeartrate;
@@ -186,6 +198,11 @@ public class ChestBeltGraphBufferizer implements ChestBeltListener {
 	public void referenceClockTime(long arg0, boolean arg1) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void connectionLost() {
+		listenner.connectionLost(address);
 	}
 
 }

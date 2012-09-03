@@ -351,4 +351,10 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void connectionLost() {
+		// TODO Auto-generated method stub
+		
+	}
 }

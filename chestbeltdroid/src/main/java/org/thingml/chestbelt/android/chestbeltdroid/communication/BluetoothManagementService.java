@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
+import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltGraphBufferizer.ChestBeltCallback;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ConnectionTask.ConnectionTaskReceiver;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity;
@@ -28,11 +29,12 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-public class BluetoothManagementService extends Service implements ConnectionTaskReceiver {
+public class BluetoothManagementService extends Service implements ConnectionTaskReceiver, ChestBeltCallback {
 	
 	public static final String ACTION_CONNECTION_FAILURE = BluetoothManagementService.class.getName() + ".ACTION_CONNECTION_FAILURE";
 	public static final String ACTION_CONNECTION_SUCCESS = BluetoothManagementService.class.getName() + ".ACTION_CONNECTION_SUCCESS";
@@ -125,12 +127,13 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 
 	private void endConnection(String address) {
 		BluetoothDevice d = btAdapter.getRemoteDevice(address);
-		runningSessions.get(address).close();
+		closeExchange(address);
 		connectTasks.remove(address);
 		runningSessions.remove(address);
 		if (runningSessions.isEmpty()) {
 			stopForeground(true);
 		}
+		graphBufferizers.remove(address);
 		databaseLogers.remove(address);
 		Toast.makeText(getApplicationContext(), "Disconnected from " + d.getName(), Toast.LENGTH_SHORT).show();
 		Intent i = new Intent(ACTION_DEVICE_DISCONNECTED);
@@ -153,6 +156,10 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	}
 
 	private void closeExchange(String address) {
+		if (runningSessions.get(address).isConnected()) {
+			Log.e(TAG, "Alive!!");
+			runningSessions.get(address).close();
+		}
 		BluetoothSocket socket = connectTasks.get(address).getSocket();
 		try {
 			socket.close();
@@ -252,7 +259,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			runningSessions.put(address, newSession);
 			ChestBeltDatabaseLoger databaseLoger = new ChestBeltDatabaseLoger(this, name);
 			databaseLogers.put(address, databaseLoger);
-			ChestBeltGraphBufferizer bufferizer = new ChestBeltGraphBufferizer();
+			ChestBeltGraphBufferizer bufferizer = new ChestBeltGraphBufferizer(this, address);
 			graphBufferizers.put(address, bufferizer);
 			newSession.addChestBeltListener(databaseLoger);
 			newSession.addChestBeltListener(bufferizer);
@@ -277,5 +284,16 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		i.putExtra(Device.EXTRA_DEVICE_NAME, name);
 		i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
 		sendBroadcast(i);
+	}
+
+	@Override
+	public void connectionLost(final String address) {
+		// Use handler because called by a worker thread
+		new Handler(Looper.getMainLooper()).post(new Runnable() {
+			@Override
+			public void run() {
+				endConnection(address);	
+			}
+		});
 	}
 }

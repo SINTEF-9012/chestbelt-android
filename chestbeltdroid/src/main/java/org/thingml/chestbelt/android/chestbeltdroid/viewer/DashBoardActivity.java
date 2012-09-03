@@ -404,4 +404,10 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void connectionLost() {
+		// TODO Auto-generated method stub
+		
+	}
 }
