@@ -156,10 +156,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	}
 
 	private void closeExchange(String address) {
-		if (runningSessions.get(address).isConnected()) {
-			Log.e(TAG, "Alive!!");
-			runningSessions.get(address).close();
-		}
+		runningSessions.get(address).close();
 		BluetoothSocket socket = connectTasks.get(address).getSocket();
 		try {
 			socket.close();
