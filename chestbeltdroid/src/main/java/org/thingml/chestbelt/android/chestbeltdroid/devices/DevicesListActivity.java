@@ -20,9 +20,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -47,8 +45,6 @@ public class DevicesListActivity extends ListActivity {
 	public static final String ACTION_ASK_DISCONNECT = DevicesListActivity.class.getName() + ".ACTION_ASK_DISCONNECT";
 	public static final String ACTION_OPENED = DevicesListActivity.class.getName() + ".ACTION_OPENED";
 	public static final String ACTION_CLOSED = DevicesListActivity.class.getName() + ".ACTION_CLOSED";
-
-	public static final String EXTRA_CONNECTION_MODE = DevicesListActivity.class.getName() + ".EXTRA_CONNECTION_MODE";
 	
 	private static final String TAG = DevicesListActivity.class.getSimpleName();
 	private static final int REQUEST_ENABLE_BT = 10;
@@ -60,7 +56,6 @@ public class DevicesListActivity extends ListActivity {
 	
 	private ArrayList<Device> devices = new ArrayList<Device>();
 	private DevicesAdapter deviceAdapter;
-	private SharedPreferences preferences;
 	private boolean changeActivity = false;
 	
 	@Override
@@ -69,7 +64,6 @@ public class DevicesListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.device_list);
 		deviceAdapter = new DevicesAdapter(this, devices);
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		setListViewProperties();
 		if (BluetoothAdapter.getDefaultAdapter() == null) {
         	Log.e(TAG, "Bluetooth is not supported.");
@@ -186,9 +180,6 @@ public class DevicesListActivity extends ListActivity {
 		i.setAction(ACTION_ASK_CONNECT);
 		i.putExtra(Device.EXTRA_DEVICE_NAME, device.getName());
 		i.putExtra(Device.EXTRA_DEVICE_ADDRESS, device.getAddress());
-		String connectMode = preferences.getString("Connection_list_preference", "10");
-		int mode = Integer.parseInt(connectMode);
-		i.putExtra(EXTRA_CONNECTION_MODE, mode);
 		startService(i);
 	}
 	

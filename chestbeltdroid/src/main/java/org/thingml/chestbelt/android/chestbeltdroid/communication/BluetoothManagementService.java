@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltGraphBufferizer.ChestBeltCallback;
@@ -32,6 +34,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
 public class BluetoothManagementService extends Service implements ConnectionTaskReceiver, ChestBeltCallback {
@@ -72,8 +75,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		String action = intent.getAction();
 		if (action.equals(DevicesListActivity.ACTION_ASK_CONNECT)) {
 			Log.d(TAG, "Start service: ACTION_ASK_CONNECT");
-			Bundle extra = intent.getExtras(); 
-			newConnection(extra.getString(Device.EXTRA_DEVICE_NAME), extra.getString(Device.EXTRA_DEVICE_ADDRESS), extra.getInt(DevicesListActivity.EXTRA_CONNECTION_MODE));
+			newConnection(intent.getStringExtra(Device.EXTRA_DEVICE_ADDRESS));
 		} else if (action.equals(DevicesListActivity.ACTION_ASK_DISCONNECT)) {
 			Log.d(TAG, "Start service: ACTION_ASK_DISCONNECT");
 			Bundle extra = intent.getExtras();
@@ -117,10 +119,12 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		return chestBeltBinder;
 	}
 	
-	private void newConnection(String name, String address, int mode) {
+	private void newConnection(String address) {
+		String connectMode = prefs.getString("Connection_list_preference", "40");
+		int mode = Integer.parseInt(connectMode);
 		if (runningSessions.containsKey(address)) {
-			Log.w(TAG, "Reconnect to " + name + " (" + address + ")");
-			endConnection(address);
+			Log.e(TAG, "Device " + address + " already connected");
+			return;
 		}
 		doConnection(address, mode);
 	}
@@ -269,6 +273,11 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			i.putExtra(Device.EXTRA_DEVICE_NAME, name);
 			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
 			sendBroadcast(i);
+			if (autoReconnect) {
+				autoReconnectTimer.cancel();
+				autoReconnect = false;
+				Log.e(TAG, "Auto reconnect canceled");
+			}
 		} else {
 			onConnectionFailure(name, address, null);
 		}
@@ -287,6 +296,10 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		sendBroadcast(i);
 	}
 
+	private Timer autoReconnectTimer;
+	private boolean autoReconnect = false;
+	private int autoReconnectDelay;
+	
 	@Override
 	public void connectionLost(final String address) {
 		// Use handler because called by a worker thread
@@ -296,5 +309,14 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 				endConnection(address);	
 			}
 		});
+		autoReconnectTimer = new Timer();
+		autoReconnectTimer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				newConnection(address);
+			}
+		}, 10000, 10000);
+		autoReconnect = true;
+		Log.e(TAG, "Auto reconnect started");
 	}
 }
