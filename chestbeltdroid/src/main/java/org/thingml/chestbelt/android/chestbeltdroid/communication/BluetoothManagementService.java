@@ -27,14 +27,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
 public class BluetoothManagementService extends Service implements ConnectionTaskReceiver, ChestBeltCallback {
@@ -56,7 +54,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	private Notification connectionNotification;
 	private boolean isApplicationRunning = false;
 	
-	private final ChestBeltBinder chestBeltBinder = new ChestBeltBinder();
+	private final ChestBeltBinder chestBeltBinder = new ChestBeltBinder(runningSessions, graphBufferizers);
 	
 	private static final String TAG = BluetoothManagementService.class.getSimpleName();
 	private static final int CONNECTION_NOTIFICATION_ID = 1001;
@@ -105,15 +103,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		return START_NOT_STICKY;
 	}
 	
-	public class ChestBeltBinder extends Binder {
-		public ChestBelt getDriver(String address) {
-			return runningSessions.get(address);
-		}
-        public ChestBeltGraphBufferizer getGraphBufferizers(String address) {
-        	return graphBufferizers.get(address);
-        }
-    }
-	
 	@Override
 	public IBinder onBind(Intent intent) {
 		return chestBeltBinder;
@@ -131,6 +120,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 
 	private void endConnection(String address) {
 		BluetoothDevice d = btAdapter.getRemoteDevice(address);
+		chestBeltBinder.deviceDisconnected(address);
 		closeExchange(address);
 		connectTasks.remove(address);
 		runningSessions.remove(address);
@@ -273,6 +263,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			i.putExtra(Device.EXTRA_DEVICE_NAME, name);
 			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
 			sendBroadcast(i);
+			chestBeltBinder.deviceConnected(address);
 			if (autoReconnect) {
 				autoReconnectTimer.cancel();
 				autoReconnect = false;

@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.ChestBeltServiceConnectionCallback;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphAdapter;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper;
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity;
 
-import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,10 +17,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class GraphListActivity extends ListActivity implements ChestBeltServiceConnectionCallback {
-	
+public class GraphListActivity extends VisualizationActivity {
+
 	private GraphAdapter adapter;
 	private GraphWrapper wrapperHeartRate;
 	private GraphWrapper wrapperTemperature;
@@ -39,67 +36,52 @@ public class GraphListActivity extends ListActivity implements ChestBeltServiceC
 	private GraphWrapper wrapperAccLongitudinal;
 	private GraphWrapper wrapperAccVertical;
 	private List<GraphWrapper> wrappers = new ArrayList<GraphWrapper>();
-	private ChestBeltServiceConnection chestBeltConnection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph_list);
 		adapter = new GraphAdapter(this, wrappers);
-		setListAdapter(adapter);
-		getListView().setDividerHeight(5);
-		chestBeltConnection = new ChestBeltServiceConnection(this, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+		ListView list = (ListView) findViewById(android.R.id.list);
+		list.setAdapter(adapter);
+		list.setDividerHeight(5);
+		list.setOnItemClickListener(itemClickListenner);
 	}
 	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		Intent intent = new Intent(this, BluetoothManagementService.class);
-		bindService(intent, chestBeltConnection, Context.BIND_AUTO_CREATE);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		if (chestBeltConnection.isBound()) {
-			unbindService(chestBeltConnection);
-			wrappers.clear();
-			chestBeltConnection.setBound(false);
+	private OnItemClickListener itemClickListenner = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+			if ("Heart rate".equals(wrappers.get(position).getName())) {
+				Intent i = new Intent(getApplicationContext(), HeartRateActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			} else if ("Temperature".equals(wrappers.get(position).getName())) {
+				Intent i = new Intent(getApplicationContext(), TemperatureActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			} else if ("Battery".equals(wrappers.get(position).getName())) {
+				Intent i = new Intent(getApplicationContext(), BatteryActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			} else if ("Activity".equals(wrappers.get(position).getName())) {
+				Intent i = new Intent(getApplicationContext(), ActivityActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			} else if ("ECG".equals(wrappers.get(position).getName())) {
+				Intent i = new Intent(getApplicationContext(), ECGActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			} else if (wrappers.get(position).getName().startsWith("Gyro")) {
+				Intent i = new Intent(getApplicationContext(), GyroActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			} else if (wrappers.get(position).getName().startsWith("Acc")) {
+				Intent i = new Intent(getApplicationContext(), AccelerometerActivity.class);
+				i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
+				startActivity(i);
+			}
 		}
-	}
-	
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		if ("Heart rate".equals(wrappers.get(position).getName())) {
-			Intent i = new Intent(getApplicationContext(), HeartRateActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		} else if ("Temperature".equals(wrappers.get(position).getName())) {
-			Intent i = new Intent(getApplicationContext(), TemperatureActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		} else if ("Battery".equals(wrappers.get(position).getName())) {
-			Intent i = new Intent(getApplicationContext(), BatteryActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		} else if ("Activity".equals(wrappers.get(position).getName())) {
-			Intent i = new Intent(getApplicationContext(), ActivityActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		} else if ("ECG".equals(wrappers.get(position).getName())) {
-			Intent i = new Intent(getApplicationContext(), ECGActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		} else if (wrappers.get(position).getName().startsWith("Gyro")) {
-			Intent i = new Intent(getApplicationContext(), GyroActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		} else if (wrappers.get(position).getName().startsWith("Acc")) {
-			Intent i = new Intent(getApplicationContext(), AccelerometerActivity.class);
-			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
-			startActivity(i);
-		}
-	}
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,7 +101,9 @@ public class GraphListActivity extends ListActivity implements ChestBeltServiceC
 	}
 
 	@Override
-	public void serviceBound() {
+	public void onBindingReady() {
+		wrappers.clear();
+		
 		wrapperHeartRate = new GraphWrapper(chestBeltConnection.getBufferizer().getBufferHeartrate());
 		wrapperHeartRate.setGraphOptions(Color.RED, 1000, GraphBaseView.BARCHART, 20, 180, "Heart rate");
 		wrapperHeartRate.setPrinterParameters(true, true, true);
@@ -175,6 +159,7 @@ public class GraphListActivity extends ListActivity implements ChestBeltServiceC
 				wrappers.add(wrapperAccLateral);
 				wrappers.add(wrapperAccLongitudinal);
 				wrappers.add(wrapperAccVertical);
+				adapter.notifyDataSetChanged();
 			}
 		});
 	}

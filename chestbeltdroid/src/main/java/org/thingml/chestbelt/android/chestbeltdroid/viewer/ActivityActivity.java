@@ -1,29 +1,21 @@
 	package org.thingml.chestbelt.android.chestbeltdroid.viewer;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.ChestBeltServiceConnectionCallback;
-import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView;
+import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView.GraphListenner;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper;
-import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView.GraphListenner;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ActivityActivity extends Activity implements ChestBeltServiceConnectionCallback, GraphListenner {
+public class ActivityActivity extends VisualizationActivity implements GraphListenner {
 	
 	private TextView tvSensorName;
 	private ImageView ivSensorIcon;
 	private GraphDetailsView graph;
-	private ChestBeltServiceConnection chestBeltConnection;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,73 +26,42 @@ public class ActivityActivity extends Activity implements ChestBeltServiceConnec
 		ivSensorIcon = (ImageView) findViewById(R.id.iv_sensor_icon);
 		ivSensorIcon.setImageResource(R.drawable.activity0);
 		graph =  (GraphDetailsView) findViewById(R.id.gv_sensor_graph);
-		chestBeltConnection = new ChestBeltServiceConnection(this, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		graph.registerListenner(this);
-		Intent intent = new Intent(this, BluetoothManagementService.class);
-		bindService(intent, chestBeltConnection, Context.BIND_AUTO_CREATE);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		graph.unregisterListenner(this);
-		if (chestBeltConnection.isBound()) {
-			unbindService(chestBeltConnection);
-			chestBeltConnection.setBound(false);
-		}
-	}
-
-	@Override
-	public void serviceBound() {
+	protected void onBindingReady() {
 		GraphWrapper wrapper = new GraphWrapper(chestBeltConnection.getBufferizer().getBufferActivityLevel());
 		wrapper.setGraphOptions(Color.GRAY, 500, GraphBaseView.BARCHART, 0, 3, "Activity");
 		wrapper.setPrinterParameters(false, false, true);
 		wrapper.setLineNumber(3);
-		graph.registerWrapper(wrapper);
+		graph.registerWrapper(wrapper);		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		graph.registerListenner(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		graph.unregisterListenner(this);
 	}
 
 	@Override
-	public void lastValueChanged(int value) {
-		switch (value) {
-		case 0:
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					ivSensorIcon.setImageResource(R.drawable.activity0);
+	public void lastValueChanged(final int value) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				switch (value) {
+				case 0: ivSensorIcon.setImageResource(R.drawable.activity0); break;
+				case 1: ivSensorIcon.setImageResource(R.drawable.activity1); break;
+				case 2: ivSensorIcon.setImageResource(R.drawable.activity2); break;
+				case 3: ivSensorIcon.setImageResource(R.drawable.activity3); break;
+				default: break;
 				}
-			});
-			break;
-		case 1:
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					ivSensorIcon.setImageResource(R.drawable.activity1);
-				}
-			});
-			break;
-		case 2:
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					ivSensorIcon.setImageResource(R.drawable.activity2);
-				}
-			});
-			break;
-		case 3:
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					ivSensorIcon.setImageResource(R.drawable.activity3);
-				}
-			});
-			break;
-		default:
-			break;
-		}
+			}
+		});
 	}
 }

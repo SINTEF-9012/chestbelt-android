@@ -1,23 +1,16 @@
 	package org.thingml.chestbelt.android.chestbeltdroid.viewer;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.ChestBeltServiceConnectionCallback;
-import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-public class AccelerometerActivity extends Activity implements ChestBeltServiceConnectionCallback {
+public class AccelerometerActivity extends VisualizationActivity {
 
 	private final static String TAG = AccelerometerActivity.class.getSimpleName();
 	
@@ -25,7 +18,6 @@ public class AccelerometerActivity extends Activity implements ChestBeltServiceC
 	private GraphDetailsView graph1;
 	private GraphDetailsView graph2;
 	private GraphDetailsView graph3;
-	private ChestBeltServiceConnection chestBeltConnection;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +29,10 @@ public class AccelerometerActivity extends Activity implements ChestBeltServiceC
 		graph1 =  (GraphDetailsView) findViewById(R.id.gv_sensor_graph1);
 		graph2 =  (GraphDetailsView) findViewById(R.id.gv_sensor_graph2);
 		graph3 =  (GraphDetailsView) findViewById(R.id.gv_sensor_graph3);
-		chestBeltConnection = new ChestBeltServiceConnection(this, getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS));
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		Intent intent = new Intent(this, BluetoothManagementService.class);
-		bindService(intent, chestBeltConnection, Context.BIND_AUTO_CREATE);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		if (chestBeltConnection.isBound()) {
-			unbindService(chestBeltConnection);
-			chestBeltConnection.setBound(false);
-		}
-	}
-
-	@Override
-	public void serviceBound() {
+	protected void onBindingReady() {
 		GraphWrapper wrapper1 = new GraphWrapper(chestBeltConnection.getBufferizer().getBufferAccLateral());
 		wrapper1.setGraphOptions(Color.YELLOW, 300, GraphBaseView.LINECHART, -300, 300, "Lateral");
 		wrapper1.setPrinterParameters(true, false, false);

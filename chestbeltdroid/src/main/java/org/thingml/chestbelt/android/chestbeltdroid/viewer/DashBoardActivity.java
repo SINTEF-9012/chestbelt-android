@@ -1,9 +1,6 @@
 	package org.thingml.chestbelt.android.chestbeltdroid.viewer;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection;
-import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.ChestBeltServiceConnectionCallback;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView;
@@ -12,8 +9,6 @@ import org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFra
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity;
 import org.thingml.chestbelt.driver.ChestBeltListener;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -28,10 +23,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class DashBoardActivity extends Activity implements ChestBeltServiceConnectionCallback, ChestBeltListener {
+public class DashBoardActivity extends VisualizationActivity implements ChestBeltListener {
 	
 	private GraphWrapper wrapperECGData;
-	private ChestBeltServiceConnection chestBeltConnection;
 
 	private String deviceName;
 	private String deviceAddress;
@@ -70,7 +64,6 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 		deviceAddress = getIntent().getExtras().getString(Device.EXTRA_DEVICE_ADDRESS);
 		setTitle(deviceName + " Dashboard");
 		setContentView(R.layout.dashboard);
-		chestBeltConnection = new ChestBeltServiceConnection(this, deviceAddress);
 		battery = (TextView) findViewById(R.id.tv_battery);
 		battery.setOnClickListener(new ClickListenner(BatteryActivity.class));
 		heartrate = (TextView) findViewById(R.id.tv_heartrate);
@@ -97,23 +90,6 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		Intent intent = new Intent(this, BluetoothManagementService.class);
-		bindService(intent, chestBeltConnection, Context.BIND_AUTO_CREATE);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		chestBeltConnection.getDriver().removeChestBeltListener(this);
-		if (chestBeltConnection.isBound()) {
-			unbindService(chestBeltConnection);
-			chestBeltConnection.setBound(false);
-		}
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.dashboard_menu, menu);
@@ -137,7 +113,13 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 	}
 	
 	@Override
-	public void serviceBound() {
+	protected void onStop() {
+		super.onStop();
+		removeChestBeltListenner(this);
+	}
+	
+	@Override
+	protected void onBindingReady() {
 		wrapperECGData = new GraphWrapper(chestBeltConnection.getBufferizer().getBufferECG());
 		wrapperECGData.setGraphOptions(Color.RED, 250, GraphBaseView.LINECHART, 0, 4096, "ECG");
 		wrapperECGData.setPrinterParameters(true, false, false);
@@ -187,7 +169,6 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 	@Override
 	public void cUSerialNumber(long value, int timestamp) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -390,7 +371,6 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 	@Override
 	public void cUFWRevision(String arg0, int arg1) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -402,12 +382,10 @@ public class DashBoardActivity extends Activity implements ChestBeltServiceConne
 	@Override
 	public void referenceClockTime(long arg0, boolean arg1) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void connectionLost() {
 		// TODO Auto-generated method stub
-		
 	}
 }
