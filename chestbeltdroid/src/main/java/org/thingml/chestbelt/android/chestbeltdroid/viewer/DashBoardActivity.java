@@ -5,9 +5,9 @@ import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView;
 import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper;
-import org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment;
 import org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity;
 import org.thingml.chestbelt.driver.ChestBeltListener;
+import org.thingml.chestbelt.driver.ChestBeltMode;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -85,7 +85,7 @@ public class DashBoardActivity extends VisualizationActivity implements ChestBel
 	
 	@Override
 	protected void onResume() {
-		((TextView) findViewById(R.id.tv_mode)).setText(ChestBeltPrefFragment.resolveMode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.pref_datamode_key), "0"))) + " mode");
+		((TextView) findViewById(R.id.tv_mode)).setText(ChestBeltMode.fromCode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode())))) + " mode");
 		super.onResume();
 	}
 
@@ -149,20 +149,11 @@ public class DashBoardActivity extends VisualizationActivity implements ChestBel
 
 	private void updateActivity(int value) {
 		switch (value) {
-		case 0:
-			activity.setImageResource(R.drawable.activity0);
-			break;
-		case 1:
-			activity.setImageResource(R.drawable.activity1);
-			break;
-		case 2:
-			activity.setImageResource(R.drawable.activity2);
-			break;
-		case 3:
-			activity.setImageResource(R.drawable.activity3);
-			break;
-		default:
-			break;
+		case 0: activity.setImageResource(R.drawable.activity0); break;
+		case 1: activity.setImageResource(R.drawable.activity1); break;
+		case 2: activity.setImageResource(R.drawable.activity2); break;
+		case 3: activity.setImageResource(R.drawable.activity3); break;
+		default: break;
 		}
 	}
 	

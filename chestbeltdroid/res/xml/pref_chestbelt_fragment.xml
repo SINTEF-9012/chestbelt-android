@@ -9,9 +9,7 @@
                 android:title="Data mode"
                 android:summary="Select the data mode"
                 android:entries="@array/pref_datamode_entries"
-                android:entryValues="@array/pref_datamode_values"
-                android:dialogTitle="Select a data mode" 
-                android:defaultValue="10"/>
+                android:dialogTitle="Select a data mode" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,34 +1,31 @@
 package org.thingml.chestbelt.android.chestbeltdroid.preferences;
 
 import org.thingml.chestbelt.android.chestbeltdroid.R;
+import org.thingml.chestbelt.driver.ChestBeltMode;
 
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 
 public class ChestBeltPrefFragment extends PreferenceFragment {
 	
-	public static final int DATAMODE_EXTRACTED = 10;
-	public static final int DATAMODE_FULLECG = 20;
-	public static final int DATAMODE_RAW = 30;
-	public static final int DATAMODE_RAWACCELEROMETER = 40;
-	public static final int DATAMODE_RAWGYROMODE = 50;
-	public static final int DATAMODE_TEST = 60;
-	
+	private ListPreference dataMode;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
 		addPreferencesFromResource(R.xml.pref_chestbelt_fragment);
-	}
-	
-	public static String resolveMode(int mode) {
-		switch (mode) {
-		case DATAMODE_EXTRACTED: return "Extracted";
-		case DATAMODE_FULLECG: return "FullECG";
-		case DATAMODE_RAW: return "Raw";
-		case DATAMODE_RAWACCELEROMETER: return "RawAccelerometer";
-		case DATAMODE_RAWGYROMODE: return "RawGyroscope";
-		case DATAMODE_TEST: return "Test";
-		default: return "Unknown";
-		}
+		dataMode = (ListPreference) findPreference(getString(R.string.pref_datamode_key));
+		
+		// Can't set integers as preference list values so use strings. Careful to the order!
+		String[] modeValues = new String[]{
+				String.valueOf(ChestBeltMode.Extracted.getCode()),
+				String.valueOf(ChestBeltMode.FullECG.getCode()),
+				String.valueOf(ChestBeltMode.Raw.getCode()),
+				String.valueOf(ChestBeltMode.RawAccelerometer.getCode()),
+				String.valueOf(ChestBeltMode.RawGyroMode.getCode()),
+				String.valueOf(ChestBeltMode.Test.getCode())};
+		dataMode.setEntryValues(modeValues);
+		dataMode.setDefaultValue(String.valueOf(ChestBeltMode.Extracted.getCode()));
 	}
 }

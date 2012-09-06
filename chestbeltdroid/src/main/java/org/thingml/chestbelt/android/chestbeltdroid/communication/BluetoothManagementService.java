@@ -49,7 +49,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	private Hashtable<String, ConnectionTask> connectTasks = new Hashtable<String, ConnectionTask>();
 	private Hashtable<String, ChestBeltDatabaseLoger> databaseLogers = new Hashtable<String, ChestBeltDatabaseLoger>();
 	private Hashtable<String, ChestBeltGraphBufferizer> graphBufferizers = new Hashtable<String, ChestBeltGraphBufferizer>();
-	private SharedPreferences prefs;
+	//private SharedPreferences prefs;
 	private NotificationManager notificationManager;
 	private Notification connectionNotification;
 	private boolean isApplicationRunning = false;
@@ -63,8 +63,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	public void onCreate() {
 		super.onCreate();
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		prefs.registerOnSharedPreferenceChangeListener(spChanged);
+		PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).registerOnSharedPreferenceChangeListener(spChanged);
 		setupNotification();
 	}
 	
@@ -109,7 +108,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	}
 	
 	private void newConnection(String address) {
-		String connectMode = prefs.getString("Connection_list_preference", "40");
+		String connectMode = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("Connection_list_preference", "40");
 		int mode = Integer.parseInt(connectMode);
 		if (runningSessions.containsKey(address)) {
 			Log.e(TAG, "Device " + address + " already connected");
@@ -181,51 +180,34 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			String storageKey = getString(R.string.pref_data_storage);
 			String ecgStorageKey = getString(R.string.pref_ecg_storage);
 			if (key.equals(storageKey)) {
-				refreshStorage();
+				refreshStorage(sharedPreferences.getBoolean(key, false));
 			} else if (key.equals(datamodeKey)) {
-				refreshDataMode();
+				refreshDataMode(ChestBeltMode.fromCode(Integer.valueOf(sharedPreferences.getString(key, String.valueOf(ChestBeltMode.Extracted.getCode())))));
 			} else if (key.equals(ecgStorageKey)) {
-				refreshECGStorage();
+				refreshECGStorage(sharedPreferences.getBoolean(key, false));
 			}
 		}
 	};
 	
-	private void refreshStorage() {
+	private void refreshStorage(boolean newValue) {
 		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
-			loger.setStorage(prefs.getBoolean(getString(R.string.pref_data_storage), false));
+			loger.setStorage(newValue);
 		}
 	}
 	
-	private void refreshECGStorage() {
+	private void refreshECGStorage(boolean newValue) {
 		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
-			loger.setECGStorage(prefs.getBoolean(getString(R.string.pref_ecg_storage), false));
+			loger.setECGStorage(newValue);
 		}
 	}
 	
-	private void refreshDataMode() {
-		switch (Integer.valueOf(prefs.getString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltPrefFragment.DATAMODE_EXTRACTED)))) {
-		case ChestBeltPrefFragment.DATAMODE_EXTRACTED:
-			setDataMode(ChestBeltMode.Extracted);
-			break;
-		case ChestBeltPrefFragment.DATAMODE_FULLECG:
-			setDataMode(ChestBeltMode.FullECG);
-			break;
-		case ChestBeltPrefFragment.DATAMODE_RAW:
-			setDataMode(ChestBeltMode.Raw);
-			break;
-		case ChestBeltPrefFragment.DATAMODE_RAWACCELEROMETER:
-			setDataMode(ChestBeltMode.RawAccelerometer);
-			break;
-		case ChestBeltPrefFragment.DATAMODE_RAWGYROMODE:
-			setDataMode(ChestBeltMode.RawGyroMode);
-			break;
-		case ChestBeltPrefFragment.DATAMODE_TEST:
-			setDataMode(ChestBeltMode.Test);
-			break;
+	private void refreshIMUStorage(boolean newValue) {
+		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
+			//loger.setIMUStorage(newValue);
 		}
 	}
 	
-	private void setDataMode(ChestBeltMode mode) {
+	private void refreshDataMode(ChestBeltMode mode) {
 		for (ChestBelt session : runningSessions.values()) {
 			session.setDataMode(mode);
 		}
@@ -239,7 +221,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			closeExchange(address);
 		}
 		notificationManager.cancel(CONNECTION_NOTIFICATION_ID);
-		prefs.unregisterOnSharedPreferenceChangeListener(spChanged);
+		PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).unregisterOnSharedPreferenceChangeListener(spChanged);
 	}
 
 	@Override
@@ -257,7 +239,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			newSession.setLiveDataMode();
 			newSession.connectionRestored();
 			newSession.setBTUpdateInterval(1);
-			refreshDataMode();
+			newSession.setDataMode(ChestBeltMode.fromCode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode())))));
 			startForeground(CONNECTION_NOTIFICATION_ID, connectionNotification);
 			Intent i = new Intent(ACTION_CONNECTION_SUCCESS);
 			i.putExtra(Device.EXTRA_DEVICE_NAME, name);
