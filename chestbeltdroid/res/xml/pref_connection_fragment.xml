@@ -23,5 +23,22 @@
                 android:dialogTitle="Connection mode" 
                 android:defaultValue="40"/>
     </PreferenceCategory>
+    
+    <PreferenceCategory
+            android:title="Auto reconnect">
+
+       <CheckBoxPreference
+                android:key="@string/pref_autoreconnect_key"
+                android:title="Active" 
+                android:defaultValue="false"/>
+       
+       <EditTextPreference
+                android:key="@string/pref_autoreconnect_duration_key"
+                android:title="Duration"
+                android:dialogTitle="Set the duration of the reconnection attempts in minutes"
+                android:numeric="integer"
+                android:defaultValue="10" />
+       
+    </PreferenceCategory>
 
 </PreferenceScreen>

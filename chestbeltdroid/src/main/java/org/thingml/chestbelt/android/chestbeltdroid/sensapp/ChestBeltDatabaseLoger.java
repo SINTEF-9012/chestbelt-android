@@ -40,6 +40,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 	private String prefix;
 	private boolean storage = false;
 	private boolean ecgStorage = false;
+	private boolean imuStorage = false;
 	
 	private ChestBeltBufferizer bufECG = new ChestBeltBufferizer(System.currentTimeMillis(), 2000);
 	private ChestBeltBufferizer bufAccLateral = new ChestBeltBufferizer(System.currentTimeMillis(), 2000);
@@ -62,8 +63,13 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 			checkAndRegisterSensors();
 		}
 	}
+	
 	public void setECGStorage(boolean ecgStorage) {
 		this.ecgStorage = ecgStorage;
+	}
+	
+	public void setIMUStorage(boolean imuStorage) {
+		this.imuStorage = imuStorage;
 	}
 	
 	private ContentValues prepareContentValues(String sensor, long time, long basetime) {
@@ -220,7 +226,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void gyroPitch(int value, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufGyroPitch.addMeasure(value, System.currentTimeMillis());
 			if (bufGyroPitch.isReady()) {
 				savetoDatabase(prefix + SensorNames.GYROPITCH, bufGyroPitch.toString(), bufGyroPitch.getStartTime()/1000, 0);
@@ -231,7 +237,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void gyroRoll(int value, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufGyroRoll.addMeasure(value, System.currentTimeMillis());
 			if (bufGyroRoll.isReady()) {
 				savetoDatabase(prefix + SensorNames.GYROROLL, bufGyroRoll.toString(), bufGyroRoll.getStartTime()/1000, 0);
@@ -242,7 +248,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void gyroYaw(int value, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufGyroYaw.addMeasure(value, System.currentTimeMillis());
 			if (bufGyroYaw.isReady()) {
 				savetoDatabase(prefix + SensorNames.GYROYAW, bufGyroYaw.toString(), bufGyroYaw.getStartTime()/1000, 0);
@@ -253,7 +259,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void accLateral(int value, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufAccLateral.addMeasure(value, System.currentTimeMillis());
 			if (bufAccLateral.isReady()) {
 				savetoDatabase(prefix + SensorNames.ACCLATERAL, bufAccLateral.toString(), bufAccLateral.getStartTime()/1000, 0);
@@ -264,7 +270,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void accLongitudinal(int value, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufAccLongitudinal.addMeasure(value, System.currentTimeMillis());
 			if (bufAccLongitudinal.isReady()) {
 				savetoDatabase(prefix + SensorNames.ACCLONGITUDINAL, bufAccLongitudinal.toString(), bufAccLongitudinal.getStartTime()/1000, 0);
@@ -275,7 +281,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void accVertical(int value, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufAccVertical.addMeasure(value, System.currentTimeMillis());
 			if (bufAccVertical.isReady()) {
 				savetoDatabase(prefix + SensorNames.ACCVERTICAL, bufAccVertical.toString(), bufAccVertical.getStartTime()/1000, 0);
@@ -293,7 +299,7 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 
 	@Override
 	public void combinedIMU(int ax, int ay, int az, int gx, int gy, int gz, int timestamp) {
-		if (storage) {
+		if (storage && imuStorage) {
 			bufAccLateral.addMeasure(ay, System.currentTimeMillis());
 			if (bufAccLateral.isReady()) {
 				savetoDatabase(prefix + SensorNames.ACCLATERAL, bufAccLateral.toString(), bufAccLateral.getStartTime()/1000, 0);

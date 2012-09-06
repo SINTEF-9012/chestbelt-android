@@ -50,11 +50,11 @@ public class DevicesListActivity extends ListActivity {
 	private static final int REQUEST_ENABLE_BT = 10;
 	private static final int DIALOG_DISCOVERY_ID = 20;
 	private static final int DIALOG_CONNECTION_ID = 30;
-	private static final int DIALOG_CONNECTION_CONFIRMATION = 40;
 	private static final int ITEM_CONNECT_ID = Menu.FIRST + 1;
 	private static final int ITEM_DISCONNECT_ID = Menu.FIRST + 2;
 	
 	private ArrayList<Device> devices = new ArrayList<Device>();
+	private Dialog connectionDialog;
 	private DevicesAdapter deviceAdapter;
 	private boolean changeActivity = false;
 	
@@ -152,10 +152,8 @@ public class DevicesListActivity extends ListActivity {
 			ProgressDialog dialog = new ProgressDialog(this); 
 			dialog.setMessage("Connection...");
 			dialog.setIndeterminate(true);
+			connectionDialog = dialog;
 			return dialog;
-		} else if (id == DIALOG_CONNECTION_CONFIRMATION) {
-			Log.d(TAG, "__CREATE_DIALOG__: " + id);
-			
 		} 
 		return null;
 	}
@@ -257,13 +255,17 @@ public class DevicesListActivity extends ListActivity {
 			String action = intent.getAction();
 			if (BluetoothManagementService.ACTION_CONNECTION_SUCCESS.equals(action)) {
 				Log.d(TAG, "Receiver: ACTION_CONNECTION_SUCCESS");
-				dismissDialog(DIALOG_CONNECTION_ID);
+				if (connectionDialog != null && connectionDialog.isShowing()) {
+					dismissDialog(DIALOG_CONNECTION_ID);
+				}
 				String address = intent.getExtras().getString(Device.EXTRA_DEVICE_ADDRESS);
 				Device d = Device.getFromAddress(devices, address);
 				deviceConnected(d);
 			} else if (action.equals(BluetoothManagementService.ACTION_CONNECTION_FAILURE)) {
 				Log.d(TAG, "Receiver: ACTION_CONNECTION_FAILURE");
-				dismissDialog(DIALOG_CONNECTION_ID);
+				if (connectionDialog != null && connectionDialog.isShowing()) {
+					dismissDialog(DIALOG_CONNECTION_ID);
+				}
 			} else if (action.equals(BluetoothManagementService.ACTION_CONNECTED_DEVICES)) {
 				Log.d(TAG, "Receiver: ACTION_CONNECTED_DEVICES");
 				String[] addresses = intent.getExtras().getStringArray(BluetoothManagementService.EXTRA_CONNECTED_DEVICE_ADDRESSES);

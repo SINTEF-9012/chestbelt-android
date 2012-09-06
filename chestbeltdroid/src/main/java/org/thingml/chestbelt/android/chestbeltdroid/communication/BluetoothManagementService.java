@@ -12,7 +12,6 @@ import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltGraph
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ConnectionTask.ConnectionTaskReceiver;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.Device;
 import org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity;
-import org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment;
 import org.thingml.chestbelt.android.chestbeltdroid.sensapp.ChestBeltDatabaseLoger;
 import org.thingml.chestbelt.driver.ChestBelt;
 import org.thingml.chestbelt.driver.ChestBeltMode;
@@ -49,7 +48,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	private Hashtable<String, ConnectionTask> connectTasks = new Hashtable<String, ConnectionTask>();
 	private Hashtable<String, ChestBeltDatabaseLoger> databaseLogers = new Hashtable<String, ChestBeltDatabaseLoger>();
 	private Hashtable<String, ChestBeltGraphBufferizer> graphBufferizers = new Hashtable<String, ChestBeltGraphBufferizer>();
-	//private SharedPreferences prefs;
 	private NotificationManager notificationManager;
 	private Notification connectionNotification;
 	private boolean isApplicationRunning = false;
@@ -176,15 +174,18 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
 		@Override
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			String datamodeKey = getString(R.string.pref_datamode_key);
-			String storageKey = getString(R.string.pref_data_storage);
-			String ecgStorageKey = getString(R.string.pref_ecg_storage);
-			if (key.equals(storageKey)) {
+			if (key.equals(getString(R.string.pref_data_storage))) {
 				refreshStorage(sharedPreferences.getBoolean(key, false));
-			} else if (key.equals(datamodeKey)) {
+			} else if (key.equals(getString(R.string.pref_datamode_key))) {
 				refreshDataMode(ChestBeltMode.fromCode(Integer.valueOf(sharedPreferences.getString(key, String.valueOf(ChestBeltMode.Extracted.getCode())))));
-			} else if (key.equals(ecgStorageKey)) {
+			} else if (key.equals(getString(R.string.pref_ecg_storage))) {
 				refreshECGStorage(sharedPreferences.getBoolean(key, false));
+			} else if (key.equals(getString(R.string.pref_imu_storage))) {
+				refreshIMUStorage(sharedPreferences.getBoolean(key, false));
+			} else if (key.equals(getString(R.string.pref_autoreconnect_key))) {
+				if (sharedPreferences.getBoolean(key, false)) {
+					stopAutoReconnection();
+				}
 			}
 		}
 	};
@@ -203,7 +204,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	
 	private void refreshIMUStorage(boolean newValue) {
 		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
-			//loger.setIMUStorage(newValue);
+			loger.setIMUStorage(newValue);
 		}
 	}
 	
@@ -231,6 +232,8 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		if (newSession != null) {
 			runningSessions.put(address, newSession);
 			ChestBeltDatabaseLoger databaseLoger = new ChestBeltDatabaseLoger(this, name);
+			databaseLoger.setECGStorage(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(getString(R.string.pref_ecg_storage), false));
+			databaseLoger.setIMUStorage(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(getString(R.string.pref_imu_storage), false));
 			databaseLogers.put(address, databaseLoger);
 			ChestBeltGraphBufferizer bufferizer = new ChestBeltGraphBufferizer(this, address);
 			graphBufferizers.put(address, bufferizer);
@@ -247,9 +250,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			sendBroadcast(i);
 			chestBeltBinder.deviceConnected(address);
 			if (autoReconnect) {
-				autoReconnectTimer.cancel();
-				autoReconnect = false;
-				Log.e(TAG, "Auto reconnect canceled");
+				stopAutoReconnection();
 			}
 		} else {
 			onConnectionFailure(name, address, null);
@@ -258,20 +259,35 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	
 	@Override
 	public void onConnectionFailure(String name, String address, String errorMessage) {
-		if (errorMessage != null) {
-			Toast.makeText(getApplicationContext(), "Unable to connect to " + name + ":\n" + errorMessage, Toast.LENGTH_LONG).show();
+		if (autoReconnect) {
+			if (++ autoReconnectAttempt >= autoReconnectMaxAttempt) {
+				stopAutoReconnection();
+			}
 		} else {
-			Toast.makeText(getApplicationContext(), "Unable to connect to " + name, Toast.LENGTH_LONG).show();
+			if (errorMessage != null) {
+				Toast.makeText(getApplicationContext(), "Unable to connect to " + name + ":\n" + errorMessage, Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(getApplicationContext(), "Unable to connect to " + name, Toast.LENGTH_LONG).show();
+			}
+			Intent i = new Intent(ACTION_CONNECTION_FAILURE);
+			i.putExtra(Device.EXTRA_DEVICE_NAME, name);
+			i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
+			sendBroadcast(i);
 		}
-		Intent i = new Intent(ACTION_CONNECTION_FAILURE);
-		i.putExtra(Device.EXTRA_DEVICE_NAME, name);
-		i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
-		sendBroadcast(i);
 	}
 
 	private Timer autoReconnectTimer;
 	private boolean autoReconnect = false;
-	private int autoReconnectDelay;
+	private int autoReconnectAttempt;
+	private int autoReconnectMaxAttempt;
+	
+	private void stopAutoReconnection() {
+		if (autoReconnect) {
+			autoReconnectTimer.cancel();
+			autoReconnect = false;
+			Log.e(TAG, "Auto reconnect canceled");
+		}
+	}
 	
 	@Override
 	public void connectionLost(final String address) {
@@ -282,14 +298,20 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 				endConnection(address);	
 			}
 		});
-		autoReconnectTimer = new Timer();
-		autoReconnectTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				newConnection(address);
-			}
-		}, 10000, 10000);
-		autoReconnect = true;
-		Log.e(TAG, "Auto reconnect started");
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		if (prefs.getBoolean(getString(R.string.pref_autoreconnect_key), false)) {
+			final int rate = 10000;
+			autoReconnectMaxAttempt = Integer.valueOf(prefs.getString(getString(R.string.pref_autoreconnect_duration_key), "10")) * 60000 / rate;
+			autoReconnectAttempt = 0;
+			autoReconnectTimer = new Timer();
+			autoReconnectTimer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					newConnection(address);
+				}
+			}, rate, rate);
+			autoReconnect = true;
+			Log.e(TAG, "Auto reconnect started");
+		}
 	}
 }
