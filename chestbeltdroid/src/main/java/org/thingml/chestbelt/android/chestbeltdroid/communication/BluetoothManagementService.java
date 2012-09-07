@@ -242,7 +242,13 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			newSession.setLiveDataMode();
 			newSession.connectionRestored();
 			newSession.setBTUpdateInterval(1);
-			newSession.setDataMode(ChestBeltMode.fromCode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode())))));
+			ChestBeltMode mode = ChestBeltMode.fromCode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode()))));
+			// If the preference is invalid set the default one
+			if (mode == null) {
+				//PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode())).commit();
+				mode = ChestBeltMode.Extracted;
+			}
+			newSession.setDataMode(mode);
 			startForeground(CONNECTION_NOTIFICATION_ID, connectionNotification);
 			Intent i = new Intent(ACTION_CONNECTION_SUCCESS);
 			i.putExtra(Device.EXTRA_DEVICE_NAME, name);
