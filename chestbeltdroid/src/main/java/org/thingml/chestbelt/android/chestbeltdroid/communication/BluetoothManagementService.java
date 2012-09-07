@@ -245,7 +245,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			ChestBeltMode mode = ChestBeltMode.fromCode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode()))));
 			// If the preference is invalid set the default one
 			if (mode == null) {
-				//PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode())).commit();
+				PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString(getString(R.string.pref_datamode_key), String.valueOf(ChestBeltMode.Extracted.getCode())).commit();
 				mode = ChestBeltMode.Extracted;
 			}
 			newSession.setDataMode(mode);
