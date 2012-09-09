@@ -1,5 +1,6 @@
 package org.thingml.chestbelt.android.chestbeltdroid.sensapp;
 
+import org.sensapp.android.sensappdroid.contract.SensAppContract;
 import org.thingml.chestbelt.android.chestbeltdroid.R;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer;
 import org.thingml.chestbelt.driver.ChestBeltListener;
@@ -74,32 +75,32 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 	
 	private ContentValues prepareContentValues(String sensor, long time, long basetime) {
 		ContentValues values = new ContentValues();
-		values.put(SensAppCPContract.Measure.SENSOR, sensor);
-		values.put(SensAppCPContract.Measure.TIME, time);
-		values.put(SensAppCPContract.Measure.BASETIME, basetime);
-		values.put(SensAppCPContract.Measure.UPLOADED, 0);
+		values.put(SensAppContract.Measure.SENSOR, sensor);
+		values.put(SensAppContract.Measure.TIME, time);
+		values.put(SensAppContract.Measure.BASETIME, basetime);
+		values.put(SensAppContract.Measure.UPLOADED, 0);
 		return values;
 	}
 	
 	private void insertInDatabase(ContentValues values) {
-		new DatabaseSaverTask(context, SensAppCPContract.Measure.CONTENT_URI).execute(values);
+		new DatabaseSaverTask(context, SensAppContract.Measure.CONTENT_URI).execute(values);
 	}
 	
 	private void savetoDatabase(String sensor, int value, long time, long basetime) {
 		ContentValues values = prepareContentValues(sensor, time, basetime);
-		values.put(SensAppCPContract.Measure.VALUE, String.valueOf(value));
+		values.put(SensAppContract.Measure.VALUE, String.valueOf(value));
 		insertInDatabase(values);
 	}
 	
 	private void savetoDatabase(String sensor, float value, long time, long basetime) {
 		ContentValues values = prepareContentValues(sensor, time, basetime);
-		values.put(SensAppCPContract.Measure.VALUE, String.valueOf(value));
+		values.put(SensAppContract.Measure.VALUE, String.valueOf(value));
 		insertInDatabase(values);
 	}
 	
 	private void savetoDatabase(String sensor, String value, long time, long basetime) {
 		ContentValues values = prepareContentValues(sensor, time, basetime);
-		values.put(SensAppCPContract.Measure.VALUE, value);
+		values.put(SensAppContract.Measure.VALUE, value);
 		insertInDatabase(values);
 	}
 	
@@ -124,19 +125,19 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 	}
 	
 	private boolean registerSensor(String name, String unit, String template, String description) {
-		Cursor cursor = context.getContentResolver().query(Uri.parse(SensAppCPContract.Sensor.CONTENT_URI + "/" + name), new String[]{SensAppCPContract.Sensor.NAME}, null, null, null);
+		Cursor cursor = context.getContentResolver().query(Uri.parse(SensAppContract.Sensor.CONTENT_URI + "/" + name), new String[]{SensAppContract.Sensor.NAME}, null, null, null);
 		if (cursor != null) {
 			boolean exists = cursor.getCount() > 0;
 			cursor.close();
 			if (!exists) {
 				ContentValues values = new ContentValues();
-				values.put(SensAppCPContract.Sensor.NAME, name);
-				values.put(SensAppCPContract.Sensor.DESCRIPTION, description);
-				values.put(SensAppCPContract.Sensor.BACKEND, "raw");
-				values.put(SensAppCPContract.Sensor.TEMPLATE, template);
-				values.put(SensAppCPContract.Sensor.UNIT, unit);
-				values.put(SensAppCPContract.Sensor.UPLOADED, 0);
-				context.getContentResolver().insert(SensAppCPContract.Sensor.CONTENT_URI, values);
+				values.put(SensAppContract.Sensor.NAME, name);
+				values.put(SensAppContract.Sensor.DESCRIPTION, description);
+				values.put(SensAppContract.Sensor.BACKEND, "raw");
+				values.put(SensAppContract.Sensor.TEMPLATE, template);
+				values.put(SensAppContract.Sensor.UNIT, unit);
+				values.put(SensAppContract.Sensor.UPLOADED, 0);
+				context.getContentResolver().insert(SensAppContract.Sensor.CONTENT_URI, values);
 				Log.i(TAG, "Sensor registered - name: " + name);
 				return true;
 			} else {

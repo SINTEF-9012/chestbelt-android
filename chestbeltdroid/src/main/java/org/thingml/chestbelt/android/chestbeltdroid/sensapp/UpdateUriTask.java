@@ -2,7 +2,7 @@ package org.thingml.chestbelt.android.chestbeltdroid.sensapp;
 
 import java.util.ArrayList;
 
-import org.thingml.chestbelt.android.chestbeltdroid.sensapp.SensAppCPContract;
+import org.sensapp.android.sensappdroid.contract.SensAppContract;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,10 +27,10 @@ public class UpdateUriTask extends AsyncTask<String, Void, Integer> {
 	protected Integer doInBackground(String... params) {
 		String uri = params[0];
 		ArrayList<String> namesToUpdate = new ArrayList<String>();
-		Cursor cursor = context.getContentResolver().query(SensAppCPContract.Sensor.CONTENT_URI, new String[]{SensAppCPContract.Sensor.NAME}, null, null, null);
+		Cursor cursor = context.getContentResolver().query(SensAppContract.Sensor.CONTENT_URI, new String[]{SensAppContract.Sensor.NAME}, null, null, null);
 		if (cursor != null) {
 			while (cursor.moveToNext()) {
-				String name = cursor.getString(cursor.getColumnIndex(SensAppCPContract.Sensor.NAME));
+				String name = cursor.getString(cursor.getColumnIndex(SensAppContract.Sensor.NAME));
 				if (name.startsWith(prefix)) {
 					namesToUpdate.add(name);
 				}
@@ -38,11 +38,11 @@ public class UpdateUriTask extends AsyncTask<String, Void, Integer> {
 			cursor.close();
 		}
 		ContentValues values = new ContentValues();
-		values.put(SensAppCPContract.Sensor.URI, uri);
-		values.put(SensAppCPContract.Sensor.UPLOADED, 0);
+		values.put(SensAppContract.Sensor.URI, uri);
+		values.put(SensAppContract.Sensor.UPLOADED, 0);
 		int rowUpdated = 0;
 		for (String name : namesToUpdate) {
-			rowUpdated += context.getContentResolver().update(Uri.parse(SensAppCPContract.Sensor.CONTENT_URI + "/" + name), values, null, null);
+			rowUpdated += context.getContentResolver().update(Uri.parse(SensAppContract.Sensor.CONTENT_URI + "/" + name), values, null, null);
 		}
 		return rowUpdated;
 	}
