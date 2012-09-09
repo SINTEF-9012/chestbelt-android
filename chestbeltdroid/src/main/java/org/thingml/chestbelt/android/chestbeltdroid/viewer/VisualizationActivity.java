@@ -46,8 +46,10 @@ abstract public class VisualizationActivity extends Activity implements ChestBel
 	}
 	
 	protected void removeChestBeltListenner(ChestBeltListener listenner) {
-		chestBeltConnection.getDriver().removeChestBeltListener(listenner);
-		Log.e(TAG, "ChestBelt listenner removed");
+		if (chestBeltConnection.getDriver() != null) {
+			chestBeltConnection.getDriver().removeChestBeltListener(listenner);
+			Log.d(TAG, "ChestBelt listenner removed");
+		}
 	}
 	
 	@Override
