@@ -55,6 +55,7 @@ public class DevicesListActivity extends ListActivity {
 	
 	private ArrayList<Device> devices = new ArrayList<Device>();
 	private Dialog connectionDialog;
+	private Dialog discoveryDialog;
 	private DevicesAdapter deviceAdapter;
 	private boolean changeActivity = false;
 	
@@ -69,10 +70,6 @@ public class DevicesListActivity extends ListActivity {
         	Log.e(TAG, "Bluetooth is not supported.");
         	Toast.makeText(this, "Bluetooth unsuported", Toast.LENGTH_LONG).show();
         	finish();
-		} else if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
-		} else {
-			getBondedDevice();
 		}
 		registerReceivers();
 		registerForContextMenu(getListView());
@@ -87,6 +84,16 @@ public class DevicesListActivity extends ListActivity {
 		TextView footer = (TextView) getLayoutInflater().inflate(R.layout.device_list_footer, null);
 		getListView().addFooterView(footer);
 		setListAdapter(deviceAdapter);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
+		} else {
+			getBondedDevice();
+		}
 	}
 
 	@Override
@@ -146,6 +153,7 @@ public class DevicesListActivity extends ListActivity {
 					stopDiscovery();
 				}
 			});
+			discoveryDialog = dialog;
 			return dialog;
 		} else if (id == DIALOG_CONNECTION_ID) {
 			Log.d(TAG, "__CREATE_DIALOG__: " + id);
@@ -173,6 +181,10 @@ public class DevicesListActivity extends ListActivity {
 	}
 	
 	private void connect(Device device) {
+		if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+			Toast.makeText(getApplicationContext(), "Error: Bluetooth is disable", Toast.LENGTH_LONG).show();
+			return;
+		}
 		showDialog(DIALOG_CONNECTION_ID, null);
 		Intent i = new Intent(this, BluetoothManagementService.class);
 		i.setAction(ACTION_ASK_CONNECT);
@@ -317,7 +329,9 @@ public class DevicesListActivity extends ListActivity {
 				}
 			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 				Log.i(TAG, "...Discovery finished");
-				dismissDialog(DIALOG_DISCOVERY_ID);
+				if (discoveryDialog != null && discoveryDialog.isShowing()) {
+					dismissDialog(DIALOG_DISCOVERY_ID);
+				}
 			}
 		}
 	};
@@ -349,6 +363,7 @@ public class DevicesListActivity extends ListActivity {
 	}
 	
 	private void getBondedDevice() {
+		devices.clear();
 		for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
 			if (isChestBeltDevice(device)) {
 				Device d = new Device(device.getName(), device.getAddress());
