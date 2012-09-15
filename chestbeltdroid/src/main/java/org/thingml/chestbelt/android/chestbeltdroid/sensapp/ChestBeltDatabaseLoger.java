@@ -1,5 +1,6 @@
 package org.thingml.chestbelt.android.chestbeltdroid.sensapp;
 
+import org.sensapp.android.sensappdroid.api.SensAppHelper;
 import org.sensapp.android.sensappdroid.contract.SensAppContract;
 import org.thingml.chestbelt.android.chestbeltdroid.R;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer;
@@ -83,7 +84,12 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 	}
 	
 	private void insertInDatabase(ContentValues values) {
-		new DatabaseSaverTask(context, SensAppContract.Measure.CONTENT_URI).execute(values);
+		String sensor = values.getAsString(SensAppContract.Measure.SENSOR);
+		String value = values.getAsString(SensAppContract.Measure.VALUE);
+		long basetime = values.getAsLong(SensAppContract.Measure.BASETIME);
+		long time = values.getAsLong(SensAppContract.Measure.TIME);
+		SensAppHelper.insertMeasure(context, sensor, value, basetime, time);
+		//new DatabaseSaverTask(context, SensAppContract.Measure.CONTENT_URI).execute(values);
 	}
 	
 	private void savetoDatabase(String sensor, int value, long time, long basetime) {
