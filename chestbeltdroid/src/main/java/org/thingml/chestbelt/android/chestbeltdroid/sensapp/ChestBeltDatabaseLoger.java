@@ -1,12 +1,14 @@
 package org.thingml.chestbelt.android.chestbeltdroid.sensapp;
 
+import org.sensapp.android.sensappdroid.api.SensAppBackend;
 import org.sensapp.android.sensappdroid.api.SensAppHelper;
+import org.sensapp.android.sensappdroid.api.SensAppTemplate;
+import org.sensapp.android.sensappdroid.api.SensAppUnit;
 import org.sensapp.android.sensappdroid.contract.SensAppContract;
 import org.thingml.chestbelt.android.chestbeltdroid.R;
 import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer;
 import org.thingml.chestbelt.driver.ChestBeltListener;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -74,80 +76,49 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 		this.imuStorage = imuStorage;
 	}
 	
-	private ContentValues prepareContentValues(String sensor, long time, long basetime) {
-		ContentValues values = new ContentValues();
-		values.put(SensAppContract.Measure.SENSOR, sensor);
-		values.put(SensAppContract.Measure.TIME, time);
-		values.put(SensAppContract.Measure.BASETIME, basetime);
-		values.put(SensAppContract.Measure.UPLOADED, 0);
-		return values;
-	}
-	
-	private void insertInDatabase(ContentValues values) {
-		String sensor = values.getAsString(SensAppContract.Measure.SENSOR);
-		String value = values.getAsString(SensAppContract.Measure.VALUE);
-		long basetime = values.getAsLong(SensAppContract.Measure.BASETIME);
-		long time = values.getAsLong(SensAppContract.Measure.TIME);
-		SensAppHelper.insertMeasure(context, sensor, value, basetime, time);
-		//new DatabaseSaverTask(context, SensAppContract.Measure.CONTENT_URI).execute(values);
-	}
-	
 	private void savetoDatabase(String sensor, int value, long time, long basetime) {
-		ContentValues values = prepareContentValues(sensor, time, basetime);
-		values.put(SensAppContract.Measure.VALUE, String.valueOf(value));
-		insertInDatabase(values);
+		SensAppHelper.insertMeasure(context, sensor, value, basetime, time);
 	}
 	
 	private void savetoDatabase(String sensor, float value, long time, long basetime) {
-		ContentValues values = prepareContentValues(sensor, time, basetime);
-		values.put(SensAppContract.Measure.VALUE, String.valueOf(value));
-		insertInDatabase(values);
+		SensAppHelper.insertMeasure(context, sensor, value, basetime, time);
 	}
 	
 	private void savetoDatabase(String sensor, String value, long time, long basetime) {
-		ContentValues values = prepareContentValues(sensor, time, basetime);
-		values.put(SensAppContract.Measure.VALUE, value);
-		insertInDatabase(values);
+		SensAppHelper.insertMeasure(context, sensor, value, basetime, time);
 	}
 	
 	private void checkAndRegisterSensors() {
 			Log.w(TAG, "Sensor register check");
-			boolean sensorsRegisterSuccess = registerSensor(prefix + SensorNames.BATTERY_STATUS, "%", "Numerical", "Battery level") 
-					& registerSensor(prefix + SensorNames.HEART_RATE, "count", "Numerical", "Heart rate")
-					& registerSensor(prefix + SensorNames.SKIN_TEMPERATURE, "degC", "Numerical", "Skin temperature")
-					& registerSensor(prefix + SensorNames.ACTIVITY, "count", "Numerical", "Activity")
-					& registerSensor(prefix + SensorNames.POSITION, "count", "Numerical", "Position")
-					& registerSensor(prefix + SensorNames.ECGDATA, "count", "String", "ECG Data")
-					& registerSensor(prefix + SensorNames.GYROPITCH, "count", "String", "Gyroscope pitch")
-					& registerSensor(prefix + SensorNames.GYROROLL, "count", "String", "Gyroscope roll")
-					& registerSensor(prefix + SensorNames.GYROYAW, "count", "String", "Gyroscope yaw")
-					& registerSensor(prefix + SensorNames.ACCLATERAL, "count", "String", "Lateral accelerometer")
-					& registerSensor(prefix + SensorNames.ACCLONGITUDINAL, "count", "String", "Longitudinal accelerometer")
-					& registerSensor(prefix + SensorNames.ACCVERTICAL, "count", "String", "Vertical accelerometer");
+			boolean sensorsRegisterSuccess = registerSensor(prefix + SensorNames.BATTERY_STATUS, "Battery level", SensAppUnit.BATTERY_LEVEL, SensAppTemplate.NUMERICAL) 
+					& registerSensor(prefix + SensorNames.HEART_RATE, "Heart rate", SensAppUnit.BITS_SECOND, SensAppTemplate.NUMERICAL)
+					& registerSensor(prefix + SensorNames.SKIN_TEMPERATURE, "Skin temperature", SensAppUnit.DEGREES_CELSIUS, SensAppTemplate.NUMERICAL)
+					& registerSensor(prefix + SensorNames.ACTIVITY, "Activity", SensAppUnit.COUNTER_VALUE, SensAppTemplate.NUMERICAL)
+					& registerSensor(prefix + SensorNames.POSITION, "Position", SensAppUnit.COUNTER_VALUE, SensAppTemplate.NUMERICAL)
+					& registerSensor(prefix + SensorNames.ECGDATA, "ECG Data", SensAppUnit.VOLT, SensAppTemplate.STRING)
+					& registerSensor(prefix + SensorNames.GYROPITCH, "Gyroscope pitch", SensAppUnit.RADIAN, SensAppTemplate.STRING)
+					& registerSensor(prefix + SensorNames.GYROROLL, "Gyroscope roll", SensAppUnit.RADIAN, SensAppTemplate.STRING)
+					& registerSensor(prefix + SensorNames.GYROYAW, "Gyroscope yaw", SensAppUnit.RADIAN, SensAppTemplate.STRING)
+					& registerSensor(prefix + SensorNames.ACCLATERAL, "Lateral accelerometer", SensAppUnit.ACCELERATION, SensAppTemplate.STRING)
+					& registerSensor(prefix + SensorNames.ACCLONGITUDINAL, "Longitudinal accelerometer", SensAppUnit.ACCELERATION, SensAppTemplate.STRING)
+					& registerSensor(prefix + SensorNames.ACCVERTICAL, "Vertical accelerometer", SensAppUnit.ACCELERATION, SensAppTemplate.STRING);
 			if (!sensorsRegisterSuccess) {
 				Log.e(TAG, "ERROR REGISTER SENSOR");
 				storage = false;
 		}
 	}
 	
-	private boolean registerSensor(String name, String unit, String template, String description) {
+	private boolean registerSensor(String name, String description, SensAppUnit unit, SensAppTemplate template) {
 		Cursor cursor = context.getContentResolver().query(Uri.parse(SensAppContract.Sensor.CONTENT_URI + "/" + name), new String[]{SensAppContract.Sensor.NAME}, null, null, null);
 		if (cursor != null) {
 			boolean exists = cursor.getCount() > 0;
 			cursor.close();
 			if (!exists) {
-				ContentValues values = new ContentValues();
-				values.put(SensAppContract.Sensor.NAME, name);
-				values.put(SensAppContract.Sensor.DESCRIPTION, description);
-				values.put(SensAppContract.Sensor.BACKEND, "raw");
-				values.put(SensAppContract.Sensor.TEMPLATE, template);
-				values.put(SensAppContract.Sensor.UNIT, unit);
-				values.put(SensAppContract.Sensor.UPLOADED, 0);
-				context.getContentResolver().insert(SensAppContract.Sensor.CONTENT_URI, values);
+				SensAppHelper.registerSensor(context, name, description, unit, SensAppBackend.raw, template, R.drawable.ic_launcher);
 				Log.i(TAG, "Sensor registered - name: " + name);
 				return true;
 			} else {
-				Log.w(TAG, "Name already exits: " + name);
+				Log.w(TAG, "Sensor already exits: " + name);
 				return true;
 			}
 		}
@@ -157,7 +128,6 @@ public class ChestBeltDatabaseLoger implements ChestBeltListener {
 	@Override
 	public void cUSerialNumber(long value, int timestamp) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
