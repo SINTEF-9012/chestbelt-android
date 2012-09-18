@@ -41,12 +41,12 @@
     <repository>
       <id>thingml-release</id>
       <name>thingml-release</name>
-      <url>http://maven.thingml.org/thingml-release/</url>
+      <url>http://maven.thingml.org/thingml-release</url>
     </repository>
   </repositories>
 
   <modules>
-    <!-- <module>chestbeltdroid-main</module> -->
+    <module>chestbeltdroid-main</module> 
   </modules>
   
   <properties>
@@ -227,6 +227,10 @@
       <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-release-plugin</artifactId>
+	<configuration>
+	  <pushChanges>false</pushChanges>
+	  <remoteTagging>false</remoteTagging>
+        </configuration>
       </plugin>
     </plugins>
   </build>
