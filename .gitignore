@@ -1,6 +1,8 @@
 .directory
 *~
 
+target/
+
 chestbeltdroid-main/bin/*
 chestbeltdroid-main/gen/*
 chestbeltdroid-main/target
