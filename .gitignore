@@ -1,7 +1,7 @@
 .directory
 *~
 
-chestbeltdroid/bin/*
-chestbeltdroid/gen/*
-chestbeltdroid/target
-chestbeltdroid/.settings
+chestbeltdroid-main/bin/*
+chestbeltdroid-main/gen/*
+chestbeltdroid-main/target
+chestbeltdroid-main/.settings
