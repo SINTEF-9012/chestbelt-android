@@ -46,7 +46,7 @@
   </repositories>
 
   <modules>
-    <module>chestbeltdroid-main</module> 
+    <!-- <module>chestbeltdroid-main</module>  -->
   </modules>
   
   <properties>
@@ -56,8 +56,6 @@
     <repositoryName>chestbelt-android</repositoryName>
     <repositoryOwner>SINTEF-9012</repositoryOwner>
     <github.host>github.com</github.host>
-    
-    <platform.version> 4.0.1.2 </platform.version>
     
     <plugin.android-maven.version>3.1.1</plugin.android-maven.version>
     <plugin.maven-jarsigner.version>1.2</plugin.maven-jarsigner.version>
