@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.thingml.chestbelt.android</groupId>
     <artifactId>chestbeltdroid</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
   </parent>
 
   <properties>

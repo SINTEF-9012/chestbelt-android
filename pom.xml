@@ -46,7 +46,7 @@
   </repositories>
 
   <modules>
-    <!-- <module>chestbeltdroid-main</module>  -->
+    <module>chestbeltdroid-main</module>
   </modules>
   
   <properties>
