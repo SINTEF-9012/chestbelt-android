@@ -267,8 +267,9 @@ public class DevicesListActivity extends ListActivity {
 		case ITEM_DISCONNECT_ID:
 			disconnect(device);
 			return true;
+		default:
+			return false;
 		}
-		return super.onContextItemSelected(item);
 	}
 
 	@Override

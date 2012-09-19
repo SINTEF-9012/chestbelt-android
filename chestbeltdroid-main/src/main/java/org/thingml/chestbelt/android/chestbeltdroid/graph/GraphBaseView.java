@@ -84,6 +84,8 @@ public class GraphBaseView extends View {
 			case LINECHART:
 				drawLineGraph(canvas);
 				break;
+			default:
+				break;
 			}
 		}
 	}

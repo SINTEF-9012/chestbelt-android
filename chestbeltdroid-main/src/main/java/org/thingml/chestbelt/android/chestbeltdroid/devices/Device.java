@@ -12,19 +12,19 @@ public class Device {
 	public static final String EXTRA_DEVICE_NAME = Device.class.getName() + ".EXTRA_DEVICE_NAME";
 	public static final String EXTRA_DEVICE_ADDRESS = Device.class.getName() + ".EXTRA_DEVICE_ADDRESS";
 		
-	private String name = null;
-	private String address = null;
-	private boolean connected = false;
-	private boolean available = false;
+	private String name;
+	private String address;
+	private boolean connected;
+	private boolean available;
 	
 	public Device(String name, String adress) {
-		this.name = new String(name);
-		this.address = new String(adress);
+		this.name = name;
+		this.address = adress;
 	}
 	
 	public Device(String name, String address, boolean connected, boolean available) {
-		this.name = new String(name);
-		this.address = new String(address);
+		this.name = name;
+		this.address = address;
 		this.connected = connected;
 		this.available = available;
 	}

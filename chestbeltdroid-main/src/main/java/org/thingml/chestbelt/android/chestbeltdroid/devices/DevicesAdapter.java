@@ -48,16 +48,17 @@ public class DevicesAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		if(convertView == null) {
+		View view = convertView;
+		if(view == null) {
 			holder = new ViewHolder();
-			convertView = inflater.inflate(R.layout.device_row, null);
+			view = inflater.inflate(R.layout.device_row, null);
 			holder.nameTv = (TextView) convertView.findViewById(R.id.list_device_name);
 			holder.availablePic = (ImageView) convertView.findViewById(R.id.list_available_image);
 			holder.addressTv = (TextView) convertView.findViewById(R.id.list_device_address);
 			holder.statusPic = (ImageView) convertView.findViewById(R.id.list_status_image);
-			convertView.setTag(holder);
+			view.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ViewHolder) view.getTag();
 		}
 		holder.nameTv.setText(devices.get(position).getName());
 		holder.addressTv.setText(devices.get(position).getAddress());
@@ -71,7 +72,7 @@ public class DevicesAdapter extends BaseAdapter {
 		} else {
 			holder.availablePic.setImageResource(android.R.color.transparent);
 		}
-		return convertView;
+		return view;
 	}
 
 }
