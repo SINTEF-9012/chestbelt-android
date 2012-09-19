@@ -120,6 +120,7 @@
     <maven-pmd-plugin.configLocation>${project.basedir}/reporting/pmd.xml</maven-pmd-plugin.configLocation>
     <findbugs-exclude.location>${project.basedir}/reporting/findbugs-exclude.xml</findbugs-exclude.location>
 
+    <proguard.skip>false</proguard.skip>
     <checkstyle.skip>false</checkstyle.skip>
     <findbugs.skip>false</findbugs.skip>
     <cobertura.skip>false</cobertura.skip>
@@ -368,7 +369,18 @@
 	  <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
 	</configuration>
       </plugin>
-      
+      <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-changelog-plugin</artifactId>
+	<version>${plugin.maven-changelog.version}</version>
+	<configuration>
+	  <type>range</type>
+	  <range>30</range>
+	  <displayFileDetailUrl>${project.scm.url}/tree/master/%FILE%</displayFileDetailUrl>
+	  <headingDateFormat>MM-dd-yyyy</headingDateFormat>
+	  <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+	</configuration>
+      </plugin>      
       <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-jxr-plugin</artifactId>
