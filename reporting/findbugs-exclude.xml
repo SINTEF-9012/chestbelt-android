@@ -1,5 +1,5 @@
 <FindBugsFilter>
   <Match>
-    <Class name="org.thingml.chestbelt.android.chestbeltdroid.R" />
+    <Class name="~org\.thingml\.chestbelt\.android\.chestbeltdroid\.R\$.*" />
   </Match>
 </FindBugsFilter>
