@@ -79,14 +79,13 @@
     <chestbelt-driver.version>1.0.0</chestbelt-driver.version>
     <sensappdroid-contract.version>1.0</sensappdroid-contract.version>
     
-    <plugin.android-maven.version>3.2.0</plugin.android-maven.version>
+    <plugin.android-maven.version>3.3.0</plugin.android-maven.version>
     <plugin.maven-jarsigner.version>1.2</plugin.maven-jarsigner.version>
-    <plugin.jodconverter-maven.version>2.2.1</plugin.jodconverter-maven.version>
     
     <plugin.site.version>3.1</plugin.site.version>
     <plugin.project-info-reports.version>2.5</plugin.project-info-reports.version>
-    <plugin.checkstyle.version>2.9</plugin.checkstyle.version>
-    <plugin.findbugs-maven.version>2.5</plugin.findbugs-maven.version>
+    <plugin.checkstyle.version>2.9.1</plugin.checkstyle.version>
+    <plugin.findbugs-maven.version>2.5.2</plugin.findbugs-maven.version>
     <plugin.jxr.version>2.3</plugin.jxr.version>
     <plugin.pmd-plugin.version>2.7.1</plugin.pmd-plugin.version>
     <plugin.maven-changelog.version>2.2</plugin.maven-changelog.version>
@@ -96,13 +95,13 @@
     <plugin.maven-assembly.version>2.3</plugin.maven-assembly.version>
     <plugin.maven-ressource.version>2.5</plugin.maven-ressource.version>
     <plugin.maven-jar.version>2.4</plugin.maven-jar.version>
-    <plugin.compiler.version>2.4</plugin.compiler.version>
+    <plugin.compiler.version>2.5.1</plugin.compiler.version>
     <plugin.clean.version>2.5</plugin.clean.version>
     <plugin.install.version>2.3.1</plugin.install.version>
     <plugin.dependency.version>2.5</plugin.dependency.version>
     <plugin.deploy.version>2.7</plugin.deploy.version>
     <plugin.enforcer.version>1.0.1</plugin.enforcer.version>
-    <plugin.release.version>2.3</plugin.release.version>
+    <plugin.release.version>2.3.2</plugin.release.version>
     <plugin.source.version>2.1.2</plugin.source.version>
     <plugin.surefire.version>2.12.1</plugin.surefire.version>
     
@@ -214,11 +213,6 @@
 	  <groupId>org.apache.maven.plugins</groupId>
 	  <artifactId>maven-jarsigner-plugin</artifactId>
 	  <version>${plugin.maven-jarsigner.version}</version>
-	</plugin>
-	<plugin>
-	  <groupId>com.artofsolving</groupId>
-	  <artifactId>jodconverter-maven-plugin</artifactId>
-	  <version>${plugin.jodconverter-maven.version}</version>
 	</plugin>
 	<plugin>
 	  <groupId>org.apache.maven.plugins</groupId>
