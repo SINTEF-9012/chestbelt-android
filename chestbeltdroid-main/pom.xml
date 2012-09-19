@@ -29,6 +29,7 @@
   <properties>
     <sign.debug>false</sign.debug> 
     <proguard.skip>false</proguard.skip>
+    <headerdir>${project.parent.basedir}</headerdir>
     <maven-checkstyle-plugin.configLocation>${project.parent.basedir}/reporting/checkstyle.xml</maven-checkstyle-plugin.configLocation>
     <maven-pmd-plugin.configLocation>${project.parent.basedir}/reporting/pmd.xml</maven-pmd-plugin.configLocation>
     <findbugs-exclude.location>${project.parent.basedir}/reporting/findbugs-exclude.xml</findbugs-exclude.location>
