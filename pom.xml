@@ -7,7 +7,7 @@
   <packaging>pom</packaging>
   <name>ChestBelt Android</name>
   <inceptionYear>2012</inceptionYear>
-  <description>ChestBelt android application enables to visualize and store data received from SINTEF chest belts</description>
+  <description>ChestBelt android application enables to visualize and store data received from SINTEF chest belts.</description>
   <url>http://chestbelt.thingml.org/android</url>
 
   <developers>
@@ -272,10 +272,41 @@
 	  <artifactId>maven-license-plugin</artifactId>
 	  <version>${plugin.license.version}</version>
 	</plugin>
-      </plugins>
-    </pluginManagement>
+	  <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+	  <plugin>
+	    <groupId>org.eclipse.m2e</groupId>
+	    <artifactId>lifecycle-mapping</artifactId>
+	    <version>1.0.0</version>
+	    <configuration>
+	      <lifecycleMappingMetadata>
+		<pluginExecutions>
+		  <pluginExecution>
+		    <pluginExecutionFilter>
+		      <groupId>
+			com.mycila.maven-license-plugin
+		      </groupId>
+		      <artifactId>
+			maven-license-plugin
+		      </artifactId>
+		      <versionRange>
+			[1.10.b1,)
+		      </versionRange>
+		      <goals>
+			<goal>format</goal>
+		      </goals>
+		    </pluginExecutionFilter>
+		    <action>
+		      <ignore></ignore>
+		    </action>
+		  </pluginExecution>
+		</pluginExecutions>
+	      </lifecycleMappingMetadata>
+	    </configuration>
+	  </plugin>
+	</plugins>
+      </pluginManagement>
 
-    <plugins>        
+      <plugins>        
       <plugin>
 	<groupId>com.mycila.maven-license-plugin</groupId>
 	<artifactId>maven-license-plugin</artifactId>
