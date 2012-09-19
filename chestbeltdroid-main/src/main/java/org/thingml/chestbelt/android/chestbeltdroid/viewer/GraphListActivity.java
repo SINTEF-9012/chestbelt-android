@@ -37,17 +37,6 @@ public class GraphListActivity extends VisualizationActivity {
 	private GraphWrapper wrapperAccVertical;
 	private List<GraphWrapper> wrappers = new ArrayList<GraphWrapper>();
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.graph_list);
-		adapter = new GraphAdapter(this, wrappers);
-		ListView list = (ListView) findViewById(android.R.id.list);
-		list.setAdapter(adapter);
-		list.setDividerHeight(5);
-		list.setOnItemClickListener(itemClickListenner);
-	}
-	
 	private OnItemClickListener itemClickListenner = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
@@ -82,6 +71,17 @@ public class GraphListActivity extends VisualizationActivity {
 			}
 		}
 	};
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.graph_list);
+		adapter = new GraphAdapter(this, wrappers);
+		ListView list = (ListView) findViewById(android.R.id.list);
+		list.setAdapter(adapter);
+		list.setDividerHeight(5);
+		list.setOnItemClickListener(itemClickListenner);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

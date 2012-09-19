@@ -9,37 +9,36 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class ConnectionTask extends AsyncTask<Integer, Void, Boolean> {
-	
+
 	public static final int MODE_STD_SEC = 10;
 	public static final int MODE_STD_UNSEC = 20;
 	public static final int MODE_NAT_SEC = 30;
 	public static final int MODE_NAT_UNSEC = 40;
 
+	private static final String TAG = ConnectionTask.class.getSimpleName();
+	private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+	private BluetoothDevice device;
+	private BluetoothSocket socket;
+	private ConnectionTaskReceiver receiver;
 	private String errorMessage;
-	
+
 	public interface ConnectionTaskReceiver {
 		public void onConnectionSuccess(String name, String address);
 		public void onConnectionFailure(String name, String address, String errorMessage);
 	}
-	
-	private static final String TAG = ConnectionTask.class.getSimpleName();
-	private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-	
-	private BluetoothDevice device;
-	private BluetoothSocket socket;
-	private ConnectionTaskReceiver receiver;
-	
+
 	public ConnectionTask (ConnectionTaskReceiver receiver, BluetoothDevice device) {
 		this.receiver = receiver;
 		this.device = device;
 	}
-	
+
 	@Override
 	protected Boolean doInBackground(Integer... params) {
 		Log.i(TAG, "Connecting to " + device.getName() + " (" + device.getAddress() + ")...");
 		return makeConnection(params[0]);
 	}
-	
+
 	@Override
 	protected void onPostExecute(Boolean connected) {
 		String name = device.getName();
@@ -56,7 +55,7 @@ public class ConnectionTask extends AsyncTask<Integer, Void, Boolean> {
 	public BluetoothSocket getSocket() {	
 		return socket;
 	}
-	
+
 	private boolean makeConnection(int mode) {
 		switch (mode) {
 		case MODE_STD_SEC:
@@ -69,6 +68,7 @@ public class ConnectionTask extends AsyncTask<Integer, Void, Boolean> {
 				Log.e(TAG, "... Failed[1].");
 				return false;
 			}
+			break;
 		case MODE_NAT_SEC:
 			Log.w(TAG, "Try to connect in secure mode with reflective method...");
 			try {
@@ -79,6 +79,7 @@ public class ConnectionTask extends AsyncTask<Integer, Void, Boolean> {
 				Log.e(TAG, "... Failed[1].");
 				return false;
 			}
+			break;
 		case MODE_STD_UNSEC:
 			Log.i(TAG, "Try to connect in unsecure mode with standard API...");
 			try {
@@ -89,6 +90,7 @@ public class ConnectionTask extends AsyncTask<Integer, Void, Boolean> {
 				Log.e(TAG, "... Failed[1].");
 				return false;
 			}
+			break;
 		case MODE_NAT_UNSEC:
 			Log.w(TAG, "Try to connect in unsecure mode with reflective method...");
 			try {
@@ -99,6 +101,7 @@ public class ConnectionTask extends AsyncTask<Integer, Void, Boolean> {
 				Log.e(TAG, "... Failed[1].");
 				return false;
 			} 
+			break;
 		}
 		if (socket == null) {
 			Log.e(TAG, "Null socket");

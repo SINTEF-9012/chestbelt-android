@@ -17,22 +17,9 @@ public class Device {
 	private boolean connected = false;
 	private boolean available = false;
 	
-	public static Device getFromAddress(ArrayList<Device> devices, String address) {
-		for (Device d : devices) {
-			if (d.getAddress().equals(address)) {
-				return d;
-			}
-		}
-		return null;
-	}
-	
-	public static boolean contain(ArrayList<Device> devices, String address) {
-		for (Device d : devices) {
-			if (d.getAddress().equals(address)) {
-				return true;
-			}
-		}
-		return false;
+	public Device(String name, String adress) {
+		this.name = new String(name);
+		this.address = new String(adress);
 	}
 	
 	public Device(String name, String address, boolean connected, boolean available) {
@@ -40,11 +27,6 @@ public class Device {
 		this.address = new String(address);
 		this.connected = connected;
 		this.available = available;
-	}
-	
-	public Device(String name, String adress) {
-		this.name = new String(name);
-		this.address = new String(adress);
 	}
 	
 	public String getName() {
@@ -82,5 +64,23 @@ public class Device {
 			return address.equals(((Device) o).getAddress()); 
 		}
 		return false;
+	}
+	
+	public static boolean contain(ArrayList<Device> devices, String address) {
+		for (Device d : devices) {
+			if (d.getAddress().equals(address)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static Device getFromAddress(ArrayList<Device> devices, String address) {
+		for (Device d : devices) {
+			if (d.getAddress().equals(address)) {
+				return d;
+			}
+		}
+		return null;
 	}
 }

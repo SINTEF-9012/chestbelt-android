@@ -20,19 +20,6 @@ public class SensAppPrefFragment extends PreferenceFragment {
 	private CheckBoxPreference dataStorage;
 	private CheckBoxPreference storeECG;
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.pref_sensapp_fragment);
-		dataStorage = (CheckBoxPreference) findPreference(getString(R.string.pref_data_storage));
-		dataStorage.setOnPreferenceChangeListener(checkSensAppInstall);
-		storeECG = (CheckBoxPreference) findPreference(getString(R.string.pref_ecg_storage));
-		storeECG.setOnPreferenceChangeListener(warnHugeData);
-		storeECG.setDependency(dataStorage.getKey());
-		CheckBoxPreference storeIMU = (CheckBoxPreference) findPreference(getString(R.string.pref_imu_storage));
-		storeIMU.setDependency(dataStorage.getKey());
-	}
-
 	private OnPreferenceChangeListener warnHugeData = new OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -89,4 +76,17 @@ public class SensAppPrefFragment extends PreferenceFragment {
 			return true;
 		}
 	};
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		addPreferencesFromResource(R.xml.pref_sensapp_fragment);
+		dataStorage = (CheckBoxPreference) findPreference(getString(R.string.pref_data_storage));
+		dataStorage.setOnPreferenceChangeListener(checkSensAppInstall);
+		storeECG = (CheckBoxPreference) findPreference(getString(R.string.pref_ecg_storage));
+		storeECG.setOnPreferenceChangeListener(warnHugeData);
+		storeECG.setDependency(dataStorage.getKey());
+		CheckBoxPreference storeIMU = (CheckBoxPreference) findPreference(getString(R.string.pref_imu_storage));
+		storeIMU.setDependency(dataStorage.getKey());
+	}
 }

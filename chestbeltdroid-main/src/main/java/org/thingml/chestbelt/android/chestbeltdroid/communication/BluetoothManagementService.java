@@ -40,8 +40,10 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	public static final String ACTION_CONNECTION_SUCCESS = BluetoothManagementService.class.getName() + ".ACTION_CONNECTION_SUCCESS";
 	public static final String ACTION_DEVICE_DISCONNECTED = BluetoothManagementService.class.getName() + ".ACTION_DEVICE_DISCONNECTED";
 	public static final String ACTION_CONNECTED_DEVICES = BluetoothManagementService.class.getName() + ".ACTION_CONNECTED_DEVICES";
-			
 	public static final String EXTRA_CONNECTED_DEVICE_ADDRESSES = BluetoothManagementService.class.getName() + ".EXTRA_CONNECTED_DEVICE_ADDRESSES";
+	
+	private static final String TAG = BluetoothManagementService.class.getSimpleName();
+	private static final int CONNECTION_NOTIFICATION_ID = 1001;
 	
 	private BluetoothAdapter btAdapter;
 	private Hashtable<String, ChestBelt> runningSessions = new Hashtable<String, ChestBelt>();
@@ -51,11 +53,31 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	private NotificationManager notificationManager;
 	private Notification connectionNotification;
 	private boolean isApplicationRunning = false;
+	private Timer autoReconnectTimer;
+	private boolean autoReconnect = false;
+	private int autoReconnectAttempt;
+	private int autoReconnectMaxAttempt;
 	
 	private final ChestBeltBinder chestBeltBinder = new ChestBeltBinder(runningSessions, graphBufferizers);
 	
-	private static final String TAG = BluetoothManagementService.class.getSimpleName();
-	private static final int CONNECTION_NOTIFICATION_ID = 1001;
+	private SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
+		@Override
+		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+			if (key.equals(getString(R.string.pref_data_storage))) {
+				refreshStorage(sharedPreferences.getBoolean(key, false));
+			} else if (key.equals(getString(R.string.pref_datamode_key))) {
+				refreshDataMode(ChestBeltMode.fromCode(Integer.valueOf(sharedPreferences.getString(key, String.valueOf(ChestBeltMode.Extracted.getCode())))));
+			} else if (key.equals(getString(R.string.pref_ecg_storage))) {
+				refreshECGStorage(sharedPreferences.getBoolean(key, false));
+			} else if (key.equals(getString(R.string.pref_imu_storage))) {
+				refreshIMUStorage(sharedPreferences.getBoolean(key, false));
+			} else if (key.equals(getString(R.string.pref_autoreconnect_key))) {
+				if (sharedPreferences.getBoolean(key, false)) {
+					stopAutoReconnection();
+				}
+			}
+		}
+	};
 	
 	@Override
 	public void onCreate() {
@@ -170,25 +192,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		btAdapter.cancelDiscovery();
 		connectTasks.put(btDeviceAddress, (ConnectionTask) new ConnectionTask(this, device).execute(mode));
 	}
-
-	SharedPreferences.OnSharedPreferenceChangeListener spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
-		@Override
-		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			if (key.equals(getString(R.string.pref_data_storage))) {
-				refreshStorage(sharedPreferences.getBoolean(key, false));
-			} else if (key.equals(getString(R.string.pref_datamode_key))) {
-				refreshDataMode(ChestBeltMode.fromCode(Integer.valueOf(sharedPreferences.getString(key, String.valueOf(ChestBeltMode.Extracted.getCode())))));
-			} else if (key.equals(getString(R.string.pref_ecg_storage))) {
-				refreshECGStorage(sharedPreferences.getBoolean(key, false));
-			} else if (key.equals(getString(R.string.pref_imu_storage))) {
-				refreshIMUStorage(sharedPreferences.getBoolean(key, false));
-			} else if (key.equals(getString(R.string.pref_autoreconnect_key))) {
-				if (sharedPreferences.getBoolean(key, false)) {
-					stopAutoReconnection();
-				}
-			}
-		}
-	};
 	
 	private void refreshStorage(boolean newValue) {
 		for (ChestBeltDatabaseLoger loger : databaseLogers.values()) {
@@ -281,11 +284,6 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			sendBroadcast(i);
 		}
 	}
-
-	private Timer autoReconnectTimer;
-	private boolean autoReconnect = false;
-	private int autoReconnectAttempt;
-	private int autoReconnectMaxAttempt;
 	
 	private void stopAutoReconnection() {
 		if (autoReconnect) {
