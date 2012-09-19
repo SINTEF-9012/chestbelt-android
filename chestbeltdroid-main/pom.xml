@@ -17,53 +17,21 @@
   <parent>
     <groupId>org.thingml.chestbelt.android</groupId>
     <artifactId>chestbeltdroid</artifactId>
-    <version>1.0.1</version>
+    <version>1.1-SNAPSHOT</version>
+    <relativePath>..</relativePath>
   </parent>
+
+  <ciManagement>
+    <system>jenkins</system>
+    <url>http://build.thingml.org/job/Build%20ChestBelt%20Android/org.thingml.chestbelt.android$chestbeltdroid-main/</url>
+  </ciManagement>
 
   <properties>
     <sign.debug>false</sign.debug> 
-    <platform.version> 4.0.1.2 </platform.version>
-    <chestbelt-driver.version>1.0.0</chestbelt-driver.version>
-    <sensappdroid-contract.version>1.0</sensappdroid-contract.version>
     <proguard.skip>false</proguard.skip>
-
+    <maven-checkstyle-plugin.configLocation>${project.parent.basedir}/reporting/checkstyle.xml</maven-checkstyle-plugin.configLocation>
+    <maven-pmd-plugin.configLocation>${project.parent.basedir}/reporting/pmd.xml</maven-pmd-plugin.configLocation>
   </properties>  
-  
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-	<groupId>com.google.android</groupId>
-	<artifactId>android</artifactId>
-	<version>${platform.version}</version>
-	<scope>provided</scope>
-      </dependency>
-      <dependency>
-	<groupId>org.thingml</groupId>
-	<artifactId>chestbelt-driver</artifactId>
-	<version>${chestbelt-driver.version}</version>
-      </dependency>  
-      <dependency>
-	<groupId>org.sensapp.android</groupId>
-	<artifactId>sensappdroid-contract</artifactId>
-	<version>${sensappdroid-contract.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>
-    <dependency>
-      <groupId>com.google.android</groupId>
-      <artifactId>android</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.thingml</groupId>
-      <artifactId>chestbelt-driver</artifactId>
-    </dependency>  
-    <dependency>
-      <groupId>org.sensapp.android</groupId>
-      <artifactId>sensappdroid-contract</artifactId>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>  

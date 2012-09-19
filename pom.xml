@@ -6,13 +6,21 @@
   <version>1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ChestBelt Android</name>
+  <inceptionYear>2012</inceptionYear>
+  <description>ChestBelt android application enables to visualize and store data received from SINTEF chest belts</description>
+  <url>http://chestbelt.thingml.org/android</url>
 
   <developers>
     <developer>
       <name>Fabien Fleurey</name>
+      <email>fabien@fleurey.org</email>
     </developer>
   </developers>
   
+  <organization>
+    <name>SINTEF</name>
+  </organization>
+
   <distributionManagement> 
     <repository>
       <id>thingml-release</id>
@@ -24,6 +32,11 @@
       <name>thingml-snapshot</name>
       <url>http://maven.thingml.org/archiva/repository/thingml-snapshot/</url>
     </snapshotRepository>
+    <site>
+      <id>github-pages</id>
+      <name>GitHub pages</name>
+      <url>http://chestbelt.thingml.org/android</url>
+    </site>
   </distributionManagement>
 
   <scm>
@@ -37,6 +50,11 @@
     <system>GitHub Issues</system>
   </issueManagement>  
   
+  <ciManagement>
+    <system>jenkins</system>
+    <url>http://build.thingml.org/job/Build%20ChestBelt%20Android/modules</url>
+  </ciManagement>
+
   <repositories>
     <repository>
       <id>thingml-release</id>
@@ -56,15 +74,19 @@
     <repositoryName>chestbelt-android</repositoryName>
     <repositoryOwner>SINTEF-9012</repositoryOwner>
     <github.host>github.com</github.host>
+ 
+    <platform.version> 4.0.1.2 </platform.version>
+    <chestbelt-driver.version>1.0.0</chestbelt-driver.version>
+    <sensappdroid-contract.version>1.0</sensappdroid-contract.version>
     
-    <plugin.android-maven.version>3.1.1</plugin.android-maven.version>
+    <plugin.android-maven.version>3.2.0</plugin.android-maven.version>
     <plugin.maven-jarsigner.version>1.2</plugin.maven-jarsigner.version>
     <plugin.jodconverter-maven.version>2.2.1</plugin.jodconverter-maven.version>
     
-    <plugin.site.version>3.0</plugin.site.version>
-    <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
-    <plugin.checkstyle.version>2.8</plugin.checkstyle.version>
-    <plugin.findbugs-maven.version>2.4.0</plugin.findbugs-maven.version>
+    <plugin.site.version>3.1</plugin.site.version>
+    <plugin.project-info-reports.version>2.5</plugin.project-info-reports.version>
+    <plugin.checkstyle.version>2.9</plugin.checkstyle.version>
+    <plugin.findbugs-maven.version>2.5</plugin.findbugs-maven.version>
     <plugin.jxr.version>2.3</plugin.jxr.version>
     <plugin.pmd-plugin.version>2.7.1</plugin.pmd-plugin.version>
     <plugin.maven-changelog.version>2.2</plugin.maven-changelog.version>
@@ -74,18 +96,18 @@
     <plugin.maven-assembly.version>2.3</plugin.maven-assembly.version>
     <plugin.maven-ressource.version>2.5</plugin.maven-ressource.version>
     <plugin.maven-jar.version>2.4</plugin.maven-jar.version>
-    <plugin.compiler.version>2.3.2</plugin.compiler.version>
-    <plugin.clean.version>2.4</plugin.clean.version>
+    <plugin.compiler.version>2.4</plugin.compiler.version>
+    <plugin.clean.version>2.5</plugin.clean.version>
     <plugin.install.version>2.3.1</plugin.install.version>
-    <plugin.dependency.version>2.4</plugin.dependency.version>
+    <plugin.dependency.version>2.5</plugin.dependency.version>
     <plugin.deploy.version>2.7</plugin.deploy.version>
     <plugin.enforcer.version>1.0.1</plugin.enforcer.version>
-    <plugin.release.version>2.2.2</plugin.release.version>
+    <plugin.release.version>2.3</plugin.release.version>
     <plugin.source.version>2.1.2</plugin.source.version>
-    <plugin.surefire.version>2.12</plugin.surefire.version>
+    <plugin.surefire.version>2.12.1</plugin.surefire.version>
     
-    <maven-checkstyle-plugin.configLocation>${project.basedir}/checkstyle.xml</maven-checkstyle-plugin.configLocation>
-    <maven-pmd-plugin.configLocation>${project.basedir}/pmd.xml</maven-pmd-plugin.configLocation>
+    <maven-checkstyle-plugin.configLocation>${project.basedir}/reporting/checkstyle.xml</maven-checkstyle-plugin.configLocation>
+    <maven-pmd-plugin.configLocation>${project.basedir}/reporting/pmd.xml</maven-pmd-plugin.configLocation>
 
     <checkstyle.skip>false</checkstyle.skip>
     <findbugs.skip>false</findbugs.skip>
@@ -93,6 +115,42 @@
     <javadocs.skip>false</javadocs.skip>
     <pmd.skip>false</pmd.skip>
   </properties>  
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+	<groupId>com.google.android</groupId>
+	<artifactId>android</artifactId>
+	<version>${platform.version}</version>
+	<scope>provided</scope>
+      </dependency>
+      <dependency>
+	<groupId>org.thingml</groupId>
+	<artifactId>chestbelt-driver</artifactId>
+	<version>${chestbelt-driver.version}</version>
+      </dependency>  
+      <dependency>
+	<groupId>org.sensapp.android</groupId>
+	<artifactId>sensappdroid-contract</artifactId>
+	<version>${sensappdroid-contract.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>android</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.thingml</groupId>
+      <artifactId>chestbelt-driver</artifactId>
+    </dependency>  
+    <dependency>
+      <groupId>org.sensapp.android</groupId>
+      <artifactId>sensappdroid-contract</artifactId>
+    </dependency>
+  </dependencies>
 
   <build>
     <pluginManagement>
