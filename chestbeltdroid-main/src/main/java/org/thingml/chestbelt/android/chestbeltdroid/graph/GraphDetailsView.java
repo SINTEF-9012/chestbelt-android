@@ -49,7 +49,7 @@ public class GraphDetailsView extends GraphBaseView {
 		paint.setColor(Color.WHITE);
 		paint.setTextSize(25);
 		paint.setTextAlign(Paint.Align.CENTER);
-		canvas.drawText(String.valueOf(getLastValue()), getWidth() / 2, getHeight() / 2, paint);
+		canvas.drawText(String.valueOf(getLastValue()), getWidth() / (float) 2, getHeight() / (float) 2, paint);
 	}
 
 	private void drawName(Canvas canvas) {
@@ -57,7 +57,7 @@ public class GraphDetailsView extends GraphBaseView {
 			paint.setColor(Color.WHITE);
 			paint.setTextSize(30);
 			paint.setTextAlign(Paint.Align.CENTER);
-			canvas.drawText(getWrapper().getName(), getWidth() / 2, 30, paint);
+			canvas.drawText(getWrapper().getName(), getWidth() / (float) 2, 30, paint);
 		}
 	}
 

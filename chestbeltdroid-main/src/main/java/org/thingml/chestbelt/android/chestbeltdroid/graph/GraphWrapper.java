@@ -10,7 +10,7 @@ public class GraphWrapper {
 	private int drawGraphType = GraphBaseView.LINECHART;
 	private int lowestVisible = 0;
 	private int highestVisible = 1023;
-	private String name = new String();
+	private String name;
 	private boolean printName = false;
 	private boolean printValue = false;
 	private boolean printScale = false;
@@ -120,7 +120,7 @@ public class GraphWrapper {
 		return name;
 	}
 	
-	public void setName(String n){
-		name = n;
+	public void setName(String name){
+		this.name = name;
 	}
 }

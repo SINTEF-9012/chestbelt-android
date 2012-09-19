@@ -15,9 +15,8 @@ public class GraphAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	private List<GraphWrapper> wrappers;
 	
-	private class ViewHolder {
+	private static class ViewHolder {
 		GraphDetailsView graph;
-		//TextView tv;
 	}
 	
 	public GraphAdapter(Context context, List<GraphWrapper> wrappers) {
@@ -43,18 +42,17 @@ public class GraphAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		if(convertView == null) {
+		View view = convertView;
+		if(view == null) {
 			holder = new ViewHolder();
-			convertView = inflater.inflate(R.layout.graph_row, parent, false);
-			//holder.tv = (TextView) convertView.findViewById(R.id.tv_graphrow_name);
-			holder.graph = (GraphDetailsView) convertView.findViewById(R.id.gv_graphrow_graph);
-			convertView.setTag(holder);
+			view = inflater.inflate(R.layout.graph_row, parent, false);
+			holder.graph = (GraphDetailsView) view.findViewById(R.id.gv_graphrow_graph);
+			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		//holder.tv.setText(wrappers.get(position).getName());
 		holder.graph.registerWrapper(wrappers.get(position));
-		return convertView;
+		return view;
 	}
 
 }

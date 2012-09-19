@@ -107,6 +107,7 @@
     
     <maven-checkstyle-plugin.configLocation>${project.basedir}/reporting/checkstyle.xml</maven-checkstyle-plugin.configLocation>
     <maven-pmd-plugin.configLocation>${project.basedir}/reporting/pmd.xml</maven-pmd-plugin.configLocation>
+    <findbugs-exclude.location>${project.basedir}/reporting/findbugs-exclude.xml</findbugs-exclude.location>
 
     <checkstyle.skip>false</checkstyle.skip>
     <findbugs.skip>false</findbugs.skip>
@@ -334,6 +335,7 @@
 	  <targetJdk>1.6</targetJdk>
 	  <skip>${findbugs.skip}</skip>
 	  <xmlOutput>true</xmlOutput>
+	  <excludeFilterFile>${findbugs-exclude.location}</excludeFilterFile>
 	</configuration>
       </plugin>
       
@@ -343,7 +345,7 @@
 	<version>${plugin.pmd-plugin.version}</version>
 	<configuration>
 	  <skip>${pmd.skip}</skip>
-	  <targetJdk>${maven.compiler.source}</targetJdk>
+	  <targetJdk>1.6</targetJdk>
 	  <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 	  <rulesets>
 	    <ruleset>${maven-pmd-plugin.configLocation}</ruleset>

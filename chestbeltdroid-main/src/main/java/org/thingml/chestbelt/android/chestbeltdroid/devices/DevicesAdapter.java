@@ -22,7 +22,7 @@ public class DevicesAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private ArrayList<Device> devices;
 	
-	private class ViewHolder {
+	private static class ViewHolder {
 		TextView nameTv;
 		ImageView availablePic;
 		TextView addressTv;
@@ -52,10 +52,10 @@ public class DevicesAdapter extends BaseAdapter {
 		if(view == null) {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.device_row, null);
-			holder.nameTv = (TextView) convertView.findViewById(R.id.list_device_name);
-			holder.availablePic = (ImageView) convertView.findViewById(R.id.list_available_image);
-			holder.addressTv = (TextView) convertView.findViewById(R.id.list_device_address);
-			holder.statusPic = (ImageView) convertView.findViewById(R.id.list_status_image);
+			holder.nameTv = (TextView) view.findViewById(R.id.list_device_name);
+			holder.availablePic = (ImageView) view.findViewById(R.id.list_available_image);
+			holder.addressTv = (TextView) view.findViewById(R.id.list_device_address);
+			holder.statusPic = (ImageView) view.findViewById(R.id.list_status_image);
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();

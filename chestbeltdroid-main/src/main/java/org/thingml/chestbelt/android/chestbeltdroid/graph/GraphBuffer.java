@@ -1,12 +1,12 @@
 package org.thingml.chestbelt.android.chestbeltdroid.graph;
 
 
-public class GraphBuffer implements GraphBufferInterface {
+public class GraphBuffer {
 
 	private int[] graphData;
 	private int size;
+	private int lastValue;
 	private boolean empty = true;
-	private int lastValue = 0;
 	private int notValidNumber = Integer.MIN_VALUE;
 	private int counter = 0;
 	
@@ -14,38 +14,41 @@ public class GraphBuffer implements GraphBufferInterface {
 		size = 100;
 		graphData = new int[size];
 		initializeArray(notValidNumber);
+		lastValue = notValidNumber;
 	}
 	
 	public GraphBuffer(int customSize) {
 		size = customSize;
 		graphData = new int[size];
 		initializeArray(notValidNumber);
+		lastValue = notValidNumber;
 	}
 	
 	public GraphBuffer(int customSize, int inValidNumber) {
 		size = customSize;
 		graphData = new int[size];
-		initializeArray(inValidNumber);
+		notValidNumber = inValidNumber;
+		initializeArray(notValidNumber);
+		lastValue = notValidNumber;
 	}
 
 	public int getLastValue() {
 		return lastValue;
 	}
 	
-	private void initializeArray(int inValidNumber) {
-		for (int i = 0 ; i < graphData.length ; i++) {
-			graphData[i] = inValidNumber;
-		}
-		empty = true;
+	public boolean isEmpty() {
+		return empty;
 	}
 	
-	@Override
+	public int getInvalidNumber() {
+		return notValidNumber;
+	}
+	
 	public synchronized int[] getGraphData() {
 		int[] result = graphData.clone();
 		return result;
 	}
 
-	@Override
 	public synchronized boolean insertData(int data) {
 		if (data == notValidNumber) {
 			return false;
@@ -70,26 +73,11 @@ public class GraphBuffer implements GraphBufferInterface {
 		}
 		return false;
 	}
-
-	@Override
-	public int getInvalidNumber() {
-		return notValidNumber;
-	}
-
-	public boolean isEmpty() {
-		return empty;
-	}
 	
-	public void setArray(int[] intArray) {
-		graphData = intArray;
-		size = intArray.length;
+	private void initializeArray(int inValidNumber) {
+		for (int i = 0 ; i < graphData.length ; i++) {
+			graphData[i] = inValidNumber;
+		}
+		empty = true;
 	}
-	
-	@Override
-	public void resetBuffer(){
-		graphData = new int[size];
-		initializeArray(notValidNumber);
-		lastValue = 0;
-	}
-	
 }

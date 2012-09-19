@@ -302,6 +302,8 @@ public class DevicesListActivity extends ListActivity {
 					finish();
 				}
 				break;	
+			default:
+				break;
 		}
 	}
 	
