@@ -12,6 +12,10 @@ Bugs and Feature requests
 -------------------------
 Please see and use the issue tracker at: https://github.com/SINTEF-9012/chestbelt-android/issues
 
+Project documentation
+------------------------
+The complete project documentation will be available soon.
+
 Screenshot
 -------------------------
 ![ChestBelt android dashboard](https://raw.github.com/SINTEF-9012/chestbelt-android/master/extra/screenshots/dashboard.png)
