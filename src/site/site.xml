@@ -28,14 +28,14 @@
     <version>1.1</version>
   </skin>
   <bannerLeft>
-    <name>ChestBelt Android</name>
-    <src>icon/banner_left.png</src>
+    <name>ChestBelt android logo</name>
+    <src>icon/chestbeltdroid_logo.png</src>
     <href>http://chestbelt.thingml.org/android</href>
   </bannerLeft>
   <bannerRight>
-    <name>ChestBelt Logo</name>
-    <src>icon/banner_right.png</src>
-    <href>http://chestbelt.thingml.org/</href>
+    <name>ChestBelt android icon</name>
+    <src>icon/chestbeldroid_icon.png</src>
+    <href>https://play.google.com/store/apps/details?id=org.thingml.chestbelt.android.chestbeltdroid</href>
   </bannerRight>
   <body>
 
