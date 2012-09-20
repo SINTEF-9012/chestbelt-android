@@ -1,0 +1,39 @@
+~~
+~~ Copyright (C) 2012 SINTEF <fabien@fleurey.com>
+~~
+~~ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007;
+~~ you may not use this file except in compliance with the License.
+~~ You may obtain a copy of the License at
+~~
+~~     http://www.gnu.org/licenses/lgpl-3.0.txt
+~~
+~~ Unless required by applicable law or agreed to in writing, software
+~~ distributed under the License is distributed on an "AS IS" BASIS,
+~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~ See the License for the specific language governing permissions and
+~~ limitations under the License.
+~~
+
+ -----
+ ChestBelt Android
+ -----
+ Fabien Fleurey
+ -----
+
+<<ChestBelt Android application>>
+
+    The ChestBelt android application enables to collect and visualize data from <<SINTEF>> chest belts. The application use {{{https://github.com/SINTEF-9012/sensapp-android}SensApp android}} to store data.
+
+* Download
+
+    * {{{https://play.google.com/store/apps/details?id=org.thingml.chestbelt.android.chestbeltdroid}Latest release build}}: available on the Google Play.
+    
+    * {{{http://build.thingml.org/job/Build%20ChestBelt%20Android/lastSuccessfulBuild/org.thingml.chestbelt.android$chestbeltdroid-main}Latest snapshot build}}: intall the <chestbeltdroid-main-X.X-SNAPSHOT-aligned.apk> file.
+
+* Bugs and Feature requests
+
+    Please see and use the issue tracker at: {{https://github.com/SINTEF-9012/chestbelt-android/issues}}
+
+* Screenshot
+
+[https://raw.github.com/SINTEF-9012/chestbelt-android/master/extra/screenshots/dashboard.png] ChestBelt android dashboard
