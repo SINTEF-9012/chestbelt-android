@@ -34,7 +34,7 @@
   </bannerLeft>
   <bannerRight>
     <name>ChestBelt android icon</name>
-    <src>icon/chestbeldroid_icon.png</src>
+    <src>icon/chestbeltdroid_icon.png</src>
     <href>https://play.google.com/store/apps/details?id=org.thingml.chestbelt.android.chestbeltdroid</href>
   </bannerRight>
   <body>
