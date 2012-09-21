@@ -2,20 +2,20 @@
 
 <rss version="0.91">
   <channel>
-    <title>ChestBelt - Checkstyle report</title>
-    <link>${project.url}</link>
-    <description>ChestBelt - Checkstyle report</description>
+    <title>ChestBelt Android - Checkstyle report</title>
+    <link>http://chestbelt.thingml.org/android</link>
+    <description>ChestBelt Android - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2012</copyright>
+    <copyright>&#169;2012 SINTEF</copyright>
     <item>
-      <title>File: 36,
-             Errors: 46,
+      <title>File: 30,
+             Errors: 2,
              Warnings: 0,
              Infos: 0
       </title>
-            <link>${project.url}/checkstyle.html</link>
+            <link>http://chestbelt.thingml.org/android/checkstyle.html</link>
       <description>
-        <p>Click <a href="${project.url}/checkstyle.html">here</a> for the full Checkstyle report.</p>
+        <p>Click <a href="http://chestbelt.thingml.org/android/checkstyle.html">here</a> for the full Checkstyle report.</p>
 
         <table summary="Files" boder="1">
           <thead>
@@ -29,7 +29,7 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.ConnectionPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/ConnectionPrefFragment.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.ConnectionPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/ConnectionPrefFragment.java</a>
                 </td>
                 <td>
                   0
@@ -43,21 +43,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity.java">org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesListActivity.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.HeartRateActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/HeartRateActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity.java">org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesListActivity.java</a>
                 </td>
                 <td>
                   0
@@ -71,7 +57,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltGraphBufferizer.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltGraphBufferizer.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.HeartRateActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/HeartRateActivity.java</a>
                 </td>
                 <td>
                   0
@@ -85,35 +71,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.MultipleGraphView.java">org/thingml/chestbelt/android/chestbeltdroid/graph/MultipleGraphView.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltMode.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltMode.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphWrapper.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltGraphBufferizer.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltGraphBufferizer.java</a>
                 </td>
                 <td>
                   0
@@ -127,21 +85,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltMessageCode.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltMessageCode.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.GraphListActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/GraphListActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphWrapper.java</a>
                 </td>
                 <td>
                   0
@@ -155,35 +99,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphAdapter.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphAdapter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltDriver.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltDriver.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBufferizer.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBinder.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBinder.java</a>
                 </td>
                 <td>
                   0
@@ -197,7 +113,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.BatteryActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/BatteryActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.GraphListActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/GraphListActivity.java</a>
                 </td>
                 <td>
                   0
@@ -211,21 +127,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesAdapter.java">org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesAdapter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.AccelerometerActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/AccelerometerActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphAdapter.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphAdapter.java</a>
                 </td>
                 <td>
                   0
@@ -239,7 +141,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.sensapp.DatabaseSaverTask.java">org/thingml/chestbelt/android/chestbeltdroid/sensapp/DatabaseSaverTask.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.BatteryActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/BatteryActivity.java</a>
                 </td>
                 <td>
                   0
@@ -253,35 +155,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.sensapp.SensAppCPContract.java">org/thingml/chestbelt/android/chestbeltdroid/sensapp/SensAppCPContract.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.Device.java">org/thingml/chestbelt/android/chestbeltdroid/devices/Device.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  6
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltListener.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltListener.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBufferizer.java</a>
                 </td>
                 <td>
                   0
@@ -295,21 +169,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService.java">org/thingml/chestbelt/android/chestbeltdroid/communication/BluetoothManagementService.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBuffer.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBuffer.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesAdapter.java">org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesAdapter.java</a>
                 </td>
                 <td>
                   0
@@ -323,7 +183,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.ECGActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/ECGActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.AccelerometerActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/AccelerometerActivity.java</a>
                 </td>
                 <td>
                   0
@@ -337,7 +197,21 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphDetailsView.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.Device.java">org/thingml/chestbelt/android/chestbeltdroid/devices/Device.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService.java">org/thingml/chestbelt/android/chestbeltdroid/communication/BluetoothManagementService.java</a>
                 </td>
                 <td>
                   0
@@ -351,7 +225,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/ChestBeltPrefFragment.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBuffer.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBuffer.java</a>
                 </td>
                 <td>
                   0
@@ -365,7 +239,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.DashBoardActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/DashBoardActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.ECGActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/ECGActivity.java</a>
                 </td>
                 <td>
                   0
@@ -379,7 +253,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBaseView.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphDetailsView.java</a>
                 </td>
                 <td>
                   0
@@ -393,7 +267,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltServiceConnection.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.ChestBeltPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/ChestBeltPrefFragment.java</a>
                 </td>
                 <td>
                   0
@@ -407,7 +281,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBufferInterface.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBufferInterface.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.DashBoardActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/DashBoardActivity.java</a>
                 </td>
                 <td>
                   0
@@ -421,7 +295,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.ActivityActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/ActivityActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView.java">org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBaseView.java</a>
                 </td>
                 <td>
                   0
@@ -435,7 +309,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ConnectionTask.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ConnectionTask.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltServiceConnection.java</a>
                 </td>
                 <td>
                   0
@@ -449,7 +323,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/PreferencesActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.VisualizationActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/VisualizationActivity.java</a>
                 </td>
                 <td>
                   0
@@ -463,35 +337,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.SensAppPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/SensAppPrefFragment.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.sensapp.ChestBeltDatabaseLoger.java">org/thingml/chestbelt/android/chestbeltdroid/sensapp/ChestBeltDatabaseLoger.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.sensapp.UpdateUriTask.java">org/thingml/chestbelt/android/chestbeltdroid/sensapp/UpdateUriTask.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.ActivityActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/ActivityActivity.java</a>
                 </td>
                 <td>
                   0
@@ -505,7 +351,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.TemperatureActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/TemperatureActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ConnectionTask.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ConnectionTask.java</a>
                 </td>
                 <td>
                   0
@@ -519,7 +365,77 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.GyroActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/GyroActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/PreferencesActivity.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.SensAppPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/SensAppPrefFragment.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.sensapp.ChestBeltDatabaseLoger.java">org/thingml/chestbelt/android/chestbeltdroid/sensapp/ChestBeltDatabaseLoger.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.sensapp.UpdateUriTask.java">org/thingml/chestbelt/android/chestbeltdroid/sensapp/UpdateUriTask.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.TemperatureActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/TemperatureActivity.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.GyroActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/GyroActivity.java</a>
                 </td>
                 <td>
                   0
