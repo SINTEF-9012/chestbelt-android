@@ -99,6 +99,16 @@
 	  <keypass>${sign.keypass}</keypass>
 	</configuration>
       </plugin>
+
+      <plugin>
+	<groupId>com.github.github</groupId>
+	<artifactId>site-maven-plugin</artifactId>
+	<configuration>
+	  <message>[Maven] Updating site for ${project.version}</message>
+	  <path>${artifactId}</path>
+	  <merge>true</merge>
+	</configuration>
+      </plugin>
     </plugins>
   </build> 
 </project>
