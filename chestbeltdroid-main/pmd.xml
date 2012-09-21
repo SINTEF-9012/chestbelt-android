@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.3" timestamp="2012-09-21T22:07:57.135">
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/communication/BluetoothManagementService.java">
+<violation beginline="64" endline="64" begincolumn="46" endcolumn="60" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" variable="runningSessions" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'runningSessions' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="65" endline="65" begincolumn="51" endcolumn="62" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" variable="connectTasks" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'connectTasks' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="66" endline="66" begincolumn="59" endcolumn="72" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" variable="databaseLogers" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'databaseLogers' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="67" endline="67" begincolumn="61" endcolumn="76" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" variable="graphBufferizers" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'graphBufferizers' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="78" endline="78" begincolumn="68" endcolumn="76" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" variable="spChanged" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'spChanged' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="90" endline="92" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" method="onSharedPreferenceChanged" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="180" endline="180" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" method="initExchange" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="192" endline="192" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="BluetoothManagementService" method="closeExchange" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBinder.java">
+<violation beginline="32" endline="32" begincolumn="46" endcolumn="60" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltBinder" variable="runningSessions" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'runningSessions' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="33" endline="33" begincolumn="61" endcolumn="76" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltBinder" variable="graphBufferizers" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'graphBufferizers' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="34" endline="34" begincolumn="52" endcolumn="61" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltBinder" variable="listenners" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'listenners' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBufferizer.java">
+<violation beginline="22" endline="22" begincolumn="36" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltBufferizer" variable="values" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'values' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltGraphBufferizer.java">
+<violation beginline="27" endline="27" begincolumn="35" endcolumn="43" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="listenner" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'listenner' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="28" endline="28" begincolumn="24" endcolumn="30" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="address" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'address' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="30" endline="30" begincolumn="29" endcolumn="43" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferHeartrate" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferHeartrate' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="32" endline="32" begincolumn="29" endcolumn="45" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferTemperature" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferTemperature' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="33" endline="33" begincolumn="29" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferBattery" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferBattery' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="34" endline="34" begincolumn="29" endcolumn="47" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferActivityLevel" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferActivityLevel' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="36" endline="36" begincolumn="29" endcolumn="37" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferECG" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferECG' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="38" endline="38" begincolumn="29" endcolumn="43" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferGyroPitch" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferGyroPitch' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="39" endline="39" begincolumn="29" endcolumn="42" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferGyroRoll" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferGyroRoll' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="40" endline="40" begincolumn="29" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferGyroYaw" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferGyroYaw' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="42" endline="42" begincolumn="29" endcolumn="44" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferAccLateral" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferAccLateral' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="43" endline="43" begincolumn="29" endcolumn="49" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferAccLongitudinal" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferAccLongitudinal' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="44" endline="44" begincolumn="29" endcolumn="45" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltGraphBufferizer" variable="bufferAccVertical" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufferAccVertical' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltServiceConnection.java">
+<violation beginline="35" endline="35" begincolumn="52" endcolumn="59" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltServiceConnection" variable="activity" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'activity' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="36" endline="36" begincolumn="24" endcolumn="30" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ChestBeltServiceConnection" variable="address" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'address' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/communication/ConnectionTask.java">
+<violation beginline="36" endline="36" begincolumn="33" endcolumn="38" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ConnectionTask" variable="device" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'device' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="38" endline="38" begincolumn="40" endcolumn="47" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.communication" class="ConnectionTask" variable="receiver" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'receiver' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/devices/Device.java">
+<violation beginline="30" endline="30" begincolumn="24" endcolumn="27" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="Device" variable="name" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'name' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="31" endline="31" begincolumn="24" endcolumn="30" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="Device" variable="address" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'address' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="77" endline="77" begincolumn="24" endcolumn="39" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="Device" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
+Ensure you override both equals() and hashCode()
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesAdapter.java">
+<violation beginline="37" endline="37" begincolumn="32" endcolumn="39" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="DevicesAdapter" variable="inflater" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'inflater' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="38" endline="38" begincolumn="35" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="DevicesAdapter" variable="devices" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'devices' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesListActivity.java">
+<violation beginline="71" endline="71" begincolumn="35" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="DevicesListActivity" variable="devices" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'devices' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="299" endline="303" begincolumn="17" endcolumn="17" rule="TooFewBranchesForASwitchStatement" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="DevicesListActivity" method="onOptionsItemSelected" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#TooFewBranchesForASwitchStatement" priority="1">
+A switch with less than 3 branches is inefficient, use a if statement instead.
+</violation>
+<violation beginline="309" endline="322" begincolumn="17" endcolumn="17" rule="TooFewBranchesForASwitchStatement" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.devices" class="DevicesListActivity" method="onActivityResult" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#TooFewBranchesForASwitchStatement" priority="1">
+A switch with less than 3 branches is inefficient, use a if statement instead.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/graph/GraphAdapter.java">
+<violation beginline="30" endline="30" begincolumn="32" endcolumn="39" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphAdapter" variable="inflater" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'inflater' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="31" endline="31" begincolumn="36" endcolumn="43" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphAdapter" variable="wrappers" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'wrappers' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBaseView.java">
+<violation beginline="40" endline="40" begincolumn="21" endcolumn="32" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBaseView" variable="bottomOffset" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bottomOffset' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="41" endline="41" begincolumn="21" endcolumn="29" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBaseView" variable="topOffset" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'topOffset' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="43" endline="43" begincolumn="23" endcolumn="27" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBaseView" variable="paint" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'paint' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="44" endline="44" begincolumn="30" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBaseView" variable="paintManager" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'paintManager' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="195" endline="195" begincolumn="41" endcolumn="59" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBaseView$PaintManager" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/graph/GraphBuffer.java">
+<violation beginline="22" endline="22" begincolumn="21" endcolumn="24" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBuffer" variable="size" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'size' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="62" endline="65" begincolumn="29" endcolumn="9" rule="AvoidSynchronizedAtMethodLevel" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBuffer" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#AvoidSynchronizedAtMethodLevel" priority="3">
+Use block level rather than method level synchronization
+</violation>
+<violation beginline="67" endline="90" begincolumn="29" endcolumn="9" rule="AvoidSynchronizedAtMethodLevel" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphBuffer" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#AvoidSynchronizedAtMethodLevel" priority="3">
+Use block level rather than method level synchronization
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/graph/GraphDetailsView.java">
+<violation beginline="29" endline="29" begincolumn="23" endcolumn="27" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.graph" class="GraphDetailsView" variable="paint" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'paint' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/preferences/ChestBeltPrefFragment.java">
+<violation beginline="27" endline="27" begincolumn="17" endcolumn="40" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.preferences" class="ChestBeltPrefFragment" variable="dataMode" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'dataMode' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/preferences/PreferencesActivity.java">
+<violation beginline="28" endline="30" begincolumn="19" endcolumn="9" rule="UselessOverridingMethod" ruleset="Basic Rules" package="org.thingml.chestbelt.android.chestbeltdroid.preferences" class="PreferencesActivity" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/preferences/SensAppPrefFragment.java">
+<violation beginline="35" endline="35" begincolumn="17" endcolumn="47" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.preferences" class="SensAppPrefFragment" variable="dataStorage" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'dataStorage' could be replaced by a local variable.
+</violation>
+<violation beginline="38" endline="38" begincolumn="44" endcolumn="55" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.preferences" class="SensAppPrefFragment" variable="warnHugeData" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'warnHugeData' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="62" endline="62" begincolumn="44" endcolumn="62" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.preferences" class="SensAppPrefFragment" variable="checkSensAppInstall" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'checkSensAppInstall' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/sensapp/ChestBeltDatabaseLoger.java">
+<violation beginline="58" endline="58" begincolumn="25" endcolumn="31" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="context" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'context' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="59" endline="59" begincolumn="24" endcolumn="29" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'prefix' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="64" endline="64" begincolumn="37" endcolumn="42" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufECG" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufECG' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="65" endline="65" begincolumn="37" endcolumn="49" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufAccLateral" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufAccLateral' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="66" endline="66" begincolumn="37" endcolumn="54" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufAccLongitudinal" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufAccLongitudinal' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="67" endline="67" begincolumn="37" endcolumn="50" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufAccVertical" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufAccVertical' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="68" endline="68" begincolumn="37" endcolumn="48" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufGyroPitch" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufGyroPitch' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="69" endline="69" begincolumn="37" endcolumn="47" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufGyroRoll" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufGyroRoll' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="70" endline="70" begincolumn="37" endcolumn="46" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" variable="bufGyroYaw" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'bufGyroYaw' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="75" endline="75" begincolumn="17" endcolumn="147" rule="ConstructorCallsOverridableMethod" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ConstructorCallsOverridableMethod" priority="1">
+Overridable method 'setStorage' called during object construction
+</violation>
+<violation beginline="76" endline="76" begincolumn="17" endcolumn="149" rule="ConstructorCallsOverridableMethod" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="ChestBeltDatabaseLoger" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ConstructorCallsOverridableMethod" priority="1">
+Overridable method 'setECGStorage' called during object construction
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/sensapp/UpdateUriTask.java">
+<violation beginline="33" endline="33" begincolumn="25" endcolumn="31" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="UpdateUriTask" variable="context" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'context' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="34" endline="34" begincolumn="24" endcolumn="29" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.sensapp" class="UpdateUriTask" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'prefix' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/AccelerometerActivity.java">
+<violation beginline="32" endline="32" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="AccelerometerActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/ActivityActivity.java">
+<violation beginline="31" endline="31" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="ActivityActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/BatteryActivity.java">
+<violation beginline="30" endline="30" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="BatteryActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/DashBoardActivity.java">
+<violation beginline="43" endline="43" begincolumn="17" endcolumn="44" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="DashBoardActivity" variable="wrapperECGData" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'wrapperECGData' could be replaced by a local variable.
+</violation>
+<violation beginline="61" endline="61" begincolumn="34" endcolumn="41" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="DashBoardActivity$ClickListenner" variable="activity" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'activity' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="116" endline="126" begincolumn="17" endcolumn="17" rule="TooFewBranchesForASwitchStatement" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="DashBoardActivity" method="onOptionsItemSelected" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#TooFewBranchesForASwitchStatement" priority="1">
+A switch with less than 3 branches is inefficient, use a if statement instead.
+</violation>
+<violation beginline="148" endline="148" begincolumn="41" endcolumn="54" rule="UselessStringValueOf" ruleset="String and StringBuffer Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="DashBoardActivity" method="onBindingReady" externalInfoUrl="http://pmd.sourceforge.net/rules/strings.html#UselessStringValueOf" priority="3">
+No need to call String.valueOf to append to a string.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/ECGActivity.java">
+<violation beginline="29" endline="29" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="ECGActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/GraphListActivity.java">
+<violation beginline="53" endline="53" begincolumn="36" endcolumn="43" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="GraphListActivity" variable="wrappers" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'wrappers' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="55" endline="55" begincolumn="37" endcolumn="54" rule="ImmutableField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="GraphListActivity" variable="itemClickListenner" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#ImmutableField" priority="3">
+Private field 'itemClickListenner' could be made final; it is only initialized in the declaration or constructor.
+</violation>
+<violation beginline="110" endline="114" begincolumn="17" endcolumn="17" rule="TooFewBranchesForASwitchStatement" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="GraphListActivity" method="onOptionsItemSelected" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#TooFewBranchesForASwitchStatement" priority="1">
+A switch with less than 3 branches is inefficient, use a if statement instead.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/GyroActivity.java">
+<violation beginline="32" endline="32" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="GyroActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/HeartRateActivity.java">
+<violation beginline="34" endline="34" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="HeartRateActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+<violation beginline="35" endline="35" begincolumn="17" endcolumn="39" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="HeartRateActivity" variable="ivSensorIcon" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'ivSensorIcon' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/TemperatureActivity.java">
+<violation beginline="30" endline="30" begincolumn="17" endcolumn="38" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="TemperatureActivity" variable="tvSensorName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'tvSensorName' could be replaced by a local variable.
+</violation>
+</file>
+<file name="/home/fabien/git/chestbelt-android/chestbeltdroid-main/src/main/java/org/thingml/chestbelt/android/chestbeltdroid/viewer/VisualizationActivity.java">
+<violation beginline="35" endline="35" begincolumn="17" endcolumn="37" rule="SingularField" ruleset="Design Rules" package="org.thingml.chestbelt.android.chestbeltdroid.viewer" class="VisualizationActivity" variable="deviceAddress" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#SingularField" priority="3">
+Perhaps 'deviceAddress' could be replaced by a local variable.
+</violation>
+</file>
+</pmd>
