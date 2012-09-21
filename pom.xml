@@ -365,7 +365,6 @@
 	<artifactId>site-maven-plugin</artifactId>
 	<configuration>
 	  <message>[Maven] Updating site for ${project.version}</message>
-	  <path></path>
 	  <merge>true</merge>
 	</configuration>
       </plugin>
