@@ -1,0 +1,7 @@
+org.thingml.chestbelt.android.chestbeltdroid
+org.thingml.chestbelt.android.chestbeltdroid.communication
+org.thingml.chestbelt.android.chestbeltdroid.devices
+org.thingml.chestbelt.android.chestbeltdroid.graph
+org.thingml.chestbelt.android.chestbeltdroid.preferences
+org.thingml.chestbelt.android.chestbeltdroid.sensapp
+org.thingml.chestbelt.android.chestbeltdroid.viewer
