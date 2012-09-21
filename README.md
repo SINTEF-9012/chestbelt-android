@@ -14,7 +14,7 @@ Please see and use the issue tracker at: https://github.com/SINTEF-9012/chestbel
 
 Project documentation
 ------------------------
-The complete project documentation will be available soon.
+http://sintef-9012.github.com/chestbelt-android
 
 Screenshot
 -------------------------
