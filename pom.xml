@@ -43,8 +43,8 @@
     </snapshotRepository>
     <site>
       <id>github-pages</id>
-      <name>GitHub pages</name>
-      <url>http://chestbelt.thingml.org/android</url>
+      <name>GitHub pages through GitHub's site deployment plugin</name>
+      <url>.</url>
     </site>
   </distributionManagement>
 
@@ -79,7 +79,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
+
+    <github.global.server>github</github.global.server>    
     <repositoryName>chestbelt-android</repositoryName>
     <repositoryOwner>SINTEF-9012</repositoryOwner>
     <github.host>github.com</github.host>
@@ -90,7 +91,8 @@
     
     <plugin.android-maven.version>3.3.0</plugin.android-maven.version>
     <plugin.maven-jarsigner.version>1.2</plugin.maven-jarsigner.version>
-    
+
+    <plugin.github.site>0.6</plugin.github.site>    
     <plugin.site.version>3.1</plugin.site.version>
     <plugin.project-info-reports.version>2.5</plugin.project-info-reports.version>
     <plugin.checkstyle.version>2.9.1</plugin.checkstyle.version>
@@ -167,6 +169,11 @@
   <build>
     <pluginManagement>
       <plugins>
+	<plugin>
+	  <groupId>com.github.github</groupId>
+	  <artifactId>site-maven-plugin</artifactId>
+	  <version>${plugin.github.site}</version>
+	</plugin>
 	<plugin>
 	  <groupId>org.apache.maven.plugins</groupId>
 	  <artifactId>maven-assembly-plugin</artifactId>
@@ -354,10 +361,30 @@
       </plugin>
       
       <plugin>
+	<groupId>com.github.github</groupId>
+	<artifactId>site-maven-plugin</artifactId>
+	<version>0.6</version>
+	<configuration>
+	  <message>[Maven] Updating site for ${project.version}</message>
+	  <path>${project.distributionManagement.site.url}</path>
+	  <merge>true</merge>
+	</configuration>
+	<executions>
+	  <execution>
+	    <goals>
+	      <goal>site</goal>
+	    </goals>
+	    <phase>site-deploy</phase>
+	  </execution>
+	</executions>
+      </plugin>
+      
+      <plugin>
 	<artifactId>maven-site-plugin</artifactId>
 	<version>${plugin.site.version}</version>
 	<configuration>
 	  <attach>true</attach>
+	  <skipDeploy>true</skipDeploy>
 	</configuration>
 	<executions>
 	  <execution>
