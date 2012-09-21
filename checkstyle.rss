@@ -29,7 +29,7 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.ConnectionPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/ConnectionPrefFragment.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity.java">org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesListActivity.java</a>
                 </td>
                 <td>
                   0
@@ -43,7 +43,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity.java">org/thingml/chestbelt/android/chestbeltdroid/devices/DevicesListActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.preferences.ConnectionPrefFragment.java">org/thingml/chestbelt/android/chestbeltdroid/preferences/ConnectionPrefFragment.java</a>
                 </td>
                 <td>
                   0
@@ -141,7 +141,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.BatteryActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/BatteryActivity.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBufferizer.java</a>
                 </td>
                 <td>
                   0
@@ -155,7 +155,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltBufferizer.java">org/thingml/chestbelt/android/chestbeltdroid/communication/ChestBeltBufferizer.java</a>
+                  <a href="http://chestbelt.thingml.org/android/checkstyle.html#org.thingml.chestbelt.android.chestbeltdroid.viewer.BatteryActivity.java">org/thingml/chestbelt/android/chestbeltdroid/viewer/BatteryActivity.java</a>
                 </td>
                 <td>
                   0
