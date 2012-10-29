@@ -59,6 +59,8 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	
 	private static final String TAG = BluetoothManagementService.class.getSimpleName();
 	private static final int CONNECTION_NOTIFICATION_ID = 1001;
+	private static final int AUTO_RECONNECT_CANCELED_NOTIFICATION = 1002;
+	private static final int AUTO_RECONNECT_NOTIFICATION_ID = 1003;
 	
 	private BluetoothAdapter btAdapter;
 	private Hashtable<String, ChestBelt> runningSessions = new Hashtable<String, ChestBelt>();
@@ -88,7 +90,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 				refreshIMUStorage(sharedPreferences.getBoolean(key, false));
 			} else if (key.equals(getString(R.string.pref_autoreconnect_key))) {
 				if (sharedPreferences.getBoolean(key, false)) {
-					stopAutoReconnection();
+					stopAutoReconnection(false);
 				}
 			}
 		}
@@ -111,7 +113,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		} else if (action.equals(DevicesListActivity.ACTION_ASK_DISCONNECT)) {
 			Log.d(TAG, "Start service: ACTION_ASK_DISCONNECT");
 			Bundle extra = intent.getExtras();
-			endConnection(extra.getString(Device.EXTRA_DEVICE_ADDRESS));
+			endConnection(extra.getString(Device.EXTRA_DEVICE_ADDRESS), true);
 		} else if (action.equals(DevicesListActivity.ACTION_ASK_CONNECTED_DEVICES)) {
 			Log.d(TAG, "Start service: ACTION_ASK_CONNECTED_DEVICES");
 			Intent i = new Intent(ACTION_CONNECTED_DEVICES);
@@ -152,17 +154,17 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		doConnection(address, mode);
 	}
 
-	private void endConnection(String address) {
+	private void endConnection(String address, boolean intentional) {
 		BluetoothDevice d = btAdapter.getRemoteDevice(address);
 		chestBeltBinder.deviceDisconnected(address);
 		closeExchange(address);
 		connectTasks.remove(address);
 		runningSessions.remove(address);
-		if (runningSessions.isEmpty()) {
-			stopForeground(true);
-		}
 		graphBufferizers.remove(address);
 		databaseLogers.remove(address);
+		if (intentional && runningSessions.isEmpty()) {
+			stopForeground(true);
+		}
 		Toast.makeText(getApplicationContext(), "Disconnected from " + d.getName(), Toast.LENGTH_SHORT).show();
 		Intent i = new Intent(ACTION_DEVICE_DISCONNECTED);
 		i.putExtra(Device.EXTRA_DEVICE_ADDRESS, address);
@@ -274,7 +276,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 			sendBroadcast(i);
 			chestBeltBinder.deviceConnected(address);
 			if (autoReconnect) {
-				stopAutoReconnection();
+				stopAutoReconnection(false);
 			}
 		} else {
 			onConnectionFailure(name, address, null);
@@ -285,7 +287,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 	public void onConnectionFailure(String name, String address, String errorMessage) {
 		if (autoReconnect) {
 			if (++ autoReconnectAttempt >= autoReconnectMaxAttempt) {
-				stopAutoReconnection();
+				stopAutoReconnection(true);
 			}
 		} else {
 			if (errorMessage != null) {
@@ -300,10 +302,23 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		}
 	}
 	
-	private void stopAutoReconnection() {
+	private void stopAutoReconnection(boolean showNotification) {
 		if (autoReconnect) {
 			autoReconnectTimer.cancel();
 			autoReconnect = false;
+			if (showNotification) {
+				Notification notification = new Notification.Builder(getApplicationContext())
+				.setContentTitle("Auto reconnect canceled")
+				.setContentText("Click here to open the connection screen")
+				.setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), DevicesListActivity.class), 0))
+				.setSmallIcon(R.drawable.ic_disconnected)
+				.getNotification();
+				notification.flags |= Notification.FLAG_AUTO_CANCEL;
+				((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(AUTO_RECONNECT_CANCELED_NOTIFICATION, notification);
+			}
+			if (runningSessions.isEmpty()) {
+				stopForeground(true);
+			}
 			Log.e(TAG, "Auto reconnect canceled");
 		}
 	}
@@ -314,7 +329,7 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 			@Override
 			public void run() {
-				endConnection(address);	
+				endConnection(address, false);	
 			}
 		});
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -330,7 +345,15 @@ public class BluetoothManagementService extends Service implements ConnectionTas
 				}
 			}, rate, rate);
 			autoReconnect = true;
+			Notification notification = new Notification.Builder(getApplicationContext())
+			.setContentTitle("Connection lost")
+			.setContentText("Auto reconnect active")
+			.setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), DevicesListActivity.class), 0))
+			.setSmallIcon(R.drawable.ic_disconnected)
+			.getNotification();
+			notification.flags |= Notification.FLAG_ONGOING_EVENT;
+			startForeground(AUTO_RECONNECT_NOTIFICATION_ID, notification);
 			Log.e(TAG, "Auto reconnect started");
-		}
+		} 
 	}
 }
